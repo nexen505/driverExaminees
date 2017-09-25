@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+             xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+
+    <persistence-unit name="exdr_examinees" transaction-type="JTA">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>model.entity.ExdrCategoryEntity</class>
+        <class>model.entity.ExdrCertificateEntity</class>
+        <class>model.entity.ExdrExamEntity</class>
+        <class>model.entity.ExdrInspectionEntity</class>
+        <class>model.entity.ExdrLicenseOfDriverEntity</class>
+        <class>model.entity.ExdrOwnerEntity</class>
+        <class>model.entity.ExdrSchoolEntity</class>
+        <class>model.entity.ExdrVehicleEntity</class>
+        <class>model.entity.ExdrExamTypeEntity</class>
+        <class>model.entity.ExdrTypeOfVehicleEntity</class>
+        <properties>
+            <property name="hibernate.transaction.jta.platform"
+                      value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/postgres"/>
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+        </properties>
+    </persistence-unit>
+</persistence>
