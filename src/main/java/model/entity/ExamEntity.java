@@ -6,12 +6,12 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "exdr_exams", schema = "public", catalog = "postgres")
-public class ExdrExamEntity implements Identifiable {
+public class ExamEntity implements Identifiable {
     private Integer id;
     private Date examDate;
     private boolean isPassed;
-    private ExdrCertificateEntity certificate;
-    private ExdrExamTypeEntity examType;
+    private CertificateEntity certificate;
+    private ExamTypeEntity examType;
 
     @Id
     @Column(name = "id_exam")
@@ -45,21 +45,21 @@ public class ExdrExamEntity implements Identifiable {
 
     @ManyToOne
     @JoinColumn(name = "id_certificate")
-    public ExdrCertificateEntity getCertificate() {
+    public CertificateEntity getCertificate() {
         return certificate;
     }
 
-    public void setCertificate(ExdrCertificateEntity certificate) {
+    public void setCertificate(CertificateEntity certificate) {
         this.certificate = certificate;
     }
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "type_exam")
-    public ExdrExamTypeEntity getExamType() {
+    public ExamTypeEntity getExamType() {
         return examType;
     }
 
-    public void setExamType(ExdrExamTypeEntity examType) {
+    public void setExamType(ExamTypeEntity examType) {
         this.examType = examType;
     }
 
@@ -67,7 +67,7 @@ public class ExdrExamEntity implements Identifiable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ExdrExamEntity that = (ExdrExamEntity) o;
+        ExamEntity that = (ExamEntity) o;
         return isPassed == that.isPassed &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(examDate, that.examDate) &&

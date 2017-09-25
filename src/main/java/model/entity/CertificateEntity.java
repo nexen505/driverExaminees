@@ -6,12 +6,12 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "exdr_certificate", schema = "public", catalog = "postgres")
-public class ExdrCertificateEntity implements Identifiable {
+public class CertificateEntity implements Identifiable {
     private Integer id;
-    private ExdrCategoryEntity category;
-    private ExdrLicenseOfDriverEntity license;
-    private ExdrSchoolEntity school;
-    private List<ExdrExamEntity> exams;
+    private CategoryEntity category;
+    private LicenseOfDriverEntity license;
+    private SchoolEntity school;
+    private List<ExamEntity> exams;
 
     @Id
     @Column(name = "id_certificate")
@@ -25,40 +25,40 @@ public class ExdrCertificateEntity implements Identifiable {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "name_categories")
-    public ExdrCategoryEntity getCategory() {
+    public CategoryEntity getCategory() {
         return category;
     }
 
-    public void setCategory(ExdrCategoryEntity category) {
+    public void setCategory(CategoryEntity category) {
         this.category = category;
     }
 
     @ManyToOne
     @JoinColumn(name = "id_license_of_driver")
-    public ExdrLicenseOfDriverEntity getLicense() {
+    public LicenseOfDriverEntity getLicense() {
         return license;
     }
 
-    public void setLicense(ExdrLicenseOfDriverEntity license) {
+    public void setLicense(LicenseOfDriverEntity license) {
         this.license = license;
     }
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_school")
-    public ExdrSchoolEntity getSchool() {
+    public SchoolEntity getSchool() {
         return school;
     }
 
-    public void setSchool(ExdrSchoolEntity school) {
+    public void setSchool(SchoolEntity school) {
         this.school = school;
     }
 
     @OneToMany(mappedBy = "certificate")
-    public List<ExdrExamEntity> getExams() {
+    public List<ExamEntity> getExams() {
         return exams;
     }
 
-    public void setExams(List<ExdrExamEntity> exams) {
+    public void setExams(List<ExamEntity> exams) {
         this.exams = exams;
     }
 
@@ -66,7 +66,7 @@ public class ExdrCertificateEntity implements Identifiable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ExdrCertificateEntity that = (ExdrCertificateEntity) o;
+        CertificateEntity that = (CertificateEntity) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(category, that.category) &&
                 Objects.equals(license, that.license) &&

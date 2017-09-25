@@ -6,12 +6,12 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "exdr_type_of_vehicle", schema = "public", catalog = "postgres")
-public class ExdrTypeOfVehicleEntity implements Identifiable {
+public class TypeOfVehicleEntity implements Identifiable {
     private String id;
     private float minimumWeight;
     private float maximumWeight;
-    private List<ExdrVehicleEntity> vehicles;
-    private ExdrCategoryEntity category;
+    private List<VehicleEntity> vehicles;
+    private CategoryEntity category;
 
     @Id
     @Column(name = "type_transport")
@@ -44,21 +44,21 @@ public class ExdrTypeOfVehicleEntity implements Identifiable {
     }
 
     @OneToMany(mappedBy = "type")
-    public List<ExdrVehicleEntity> getVehicles() {
+    public List<VehicleEntity> getVehicles() {
         return vehicles;
     }
 
-    public void setVehicles(List<ExdrVehicleEntity> vehicles) {
+    public void setVehicles(List<VehicleEntity> vehicles) {
         this.vehicles = vehicles;
     }
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "name_categories")
-    public ExdrCategoryEntity getCategory() {
+    public CategoryEntity getCategory() {
         return category;
     }
 
-    public void setCategory(ExdrCategoryEntity category) {
+    public void setCategory(CategoryEntity category) {
         this.category = category;
     }
 
@@ -66,7 +66,7 @@ public class ExdrTypeOfVehicleEntity implements Identifiable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ExdrTypeOfVehicleEntity that = (ExdrTypeOfVehicleEntity) o;
+        TypeOfVehicleEntity that = (TypeOfVehicleEntity) o;
         return Float.compare(that.minimumWeight, minimumWeight) == 0 &&
                 Float.compare(that.maximumWeight, maximumWeight) == 0 &&
                 Objects.equals(id, that.id) &&

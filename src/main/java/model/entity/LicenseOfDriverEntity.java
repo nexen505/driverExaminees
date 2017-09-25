@@ -7,12 +7,12 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "exdr_license_of_driver", schema = "public", catalog = "postgres")
-public class ExdrLicenseOfDriverEntity implements Identifiable {
+public class LicenseOfDriverEntity implements Identifiable {
     private Integer id;
     private Date dateOfIssue;
-    private ExdrOwnerEntity owner;
-    private List<ExdrCertificateEntity> certificates;
-    private ExdrInspectionEntity inspection;
+    private OwnerEntity owner;
+    private List<CertificateEntity> certificates;
+    private InspectionEntity inspection;
 
     @Id
     @Column(name = "id_license_of_driver")
@@ -36,30 +36,30 @@ public class ExdrLicenseOfDriverEntity implements Identifiable {
 
     @OneToOne(mappedBy = "license", cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_owner")
-    public ExdrOwnerEntity getOwner() {
+    public OwnerEntity getOwner() {
         return owner;
     }
 
-    public void setOwner(ExdrOwnerEntity owner) {
+    public void setOwner(OwnerEntity owner) {
         this.owner = owner;
     }
 
     @OneToMany(mappedBy = "license")
-    public List<ExdrCertificateEntity> getCertificates() {
+    public List<CertificateEntity> getCertificates() {
         return certificates;
     }
 
-    public void setCertificates(List<ExdrCertificateEntity> categories) {
+    public void setCertificates(List<CertificateEntity> categories) {
         this.certificates = categories;
     }
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_inspection")
-    public ExdrInspectionEntity getInspection() {
+    public InspectionEntity getInspection() {
         return inspection;
     }
 
-    public void setInspection(ExdrInspectionEntity inspection) {
+    public void setInspection(InspectionEntity inspection) {
         this.inspection = inspection;
     }
 
@@ -67,7 +67,7 @@ public class ExdrLicenseOfDriverEntity implements Identifiable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ExdrLicenseOfDriverEntity that = (ExdrLicenseOfDriverEntity) o;
+        LicenseOfDriverEntity that = (LicenseOfDriverEntity) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(dateOfIssue, that.dateOfIssue) &&
                 Objects.equals(owner, that.owner) &&

@@ -6,11 +6,11 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "exdr_categories", schema = "public", catalog = "postgres")
-public class ExdrCategoryEntity implements Identifiable {
+public class CategoryEntity implements Identifiable {
     private String id;
     private Boolean activityFlag;
-    private List<ExdrCertificateEntity> certificates;
-    private List<ExdrTypeOfVehicleEntity> types;
+    private List<CertificateEntity> certificates;
+    private List<TypeOfVehicleEntity> types;
 
     @Id
     @Column(name = "name_categories")
@@ -33,20 +33,20 @@ public class ExdrCategoryEntity implements Identifiable {
     }
 
     @OneToMany(mappedBy = "category")
-    public List<ExdrCertificateEntity> getCertificates() {
+    public List<CertificateEntity> getCertificates() {
         return certificates;
     }
 
-    public void setCertificates(List<ExdrCertificateEntity> licenses) {
+    public void setCertificates(List<CertificateEntity> licenses) {
         this.certificates = licenses;
     }
 
     @OneToMany(mappedBy = "category")
-    public List<ExdrTypeOfVehicleEntity> getTypes() {
+    public List<TypeOfVehicleEntity> getTypes() {
         return types;
     }
 
-    public void setTypes(List<ExdrTypeOfVehicleEntity> types) {
+    public void setTypes(List<TypeOfVehicleEntity> types) {
         this.types = types;
     }
 
@@ -54,7 +54,7 @@ public class ExdrCategoryEntity implements Identifiable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ExdrCategoryEntity that = (ExdrCategoryEntity) o;
+        CategoryEntity that = (CategoryEntity) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(activityFlag, that.activityFlag) &&
                 Objects.equals(certificates, that.certificates) &&

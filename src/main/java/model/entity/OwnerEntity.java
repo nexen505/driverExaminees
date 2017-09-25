@@ -7,14 +7,14 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "exdr_owner", schema = "public", catalog = "postgres")
-public class ExdrOwnerEntity implements Identifiable {
+public class OwnerEntity implements Identifiable {
     private Integer id;
     private String name;
     private String patronymic;
     private String surname;
     private Date dateOfBirth;
-    private List<ExdrVehicleEntity> transportList;
-    private ExdrLicenseOfDriverEntity license;
+    private List<VehicleEntity> transportList;
+    private LicenseOfDriverEntity license;
 
     @Id
     @Column(name = "id_owner")
@@ -67,21 +67,21 @@ public class ExdrOwnerEntity implements Identifiable {
     }
 
     @OneToMany(mappedBy = "owner", cascade = {CascadeType.ALL})
-    public List<ExdrVehicleEntity> getTransportList() {
+    public List<VehicleEntity> getTransportList() {
         return transportList;
     }
 
-    public void setTransportList(List<ExdrVehicleEntity> transportList) {
+    public void setTransportList(List<VehicleEntity> transportList) {
         this.transportList = transportList;
     }
 
     @OneToOne
     @JoinColumn(name = "id_owner")
-    public ExdrLicenseOfDriverEntity getLicense() {
+    public LicenseOfDriverEntity getLicense() {
         return license;
     }
 
-    public void setLicense(ExdrLicenseOfDriverEntity license) {
+    public void setLicense(LicenseOfDriverEntity license) {
         this.license = license;
     }
 
@@ -89,7 +89,7 @@ public class ExdrOwnerEntity implements Identifiable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ExdrOwnerEntity that = (ExdrOwnerEntity) o;
+        OwnerEntity that = (OwnerEntity) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(patronymic, that.patronymic) &&

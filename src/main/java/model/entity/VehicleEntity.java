@@ -5,13 +5,13 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "exdr_transport", schema = "public", catalog = "postgres")
-public class ExdrVehicleEntity implements Identifiable {
+public class VehicleEntity implements Identifiable {
     private Integer id;
     private String name;
     private String brand;
     private int yearOfIssue;
-    private ExdrOwnerEntity owner;
-    private ExdrTypeOfVehicleEntity type;
+    private OwnerEntity owner;
+    private TypeOfVehicleEntity type;
 
     @Id
     @Column(name = "id_transport")
@@ -55,21 +55,21 @@ public class ExdrVehicleEntity implements Identifiable {
 
     @ManyToOne
     @JoinColumn(name = "id_owner")
-    public ExdrOwnerEntity getOwner() {
+    public OwnerEntity getOwner() {
         return owner;
     }
 
-    public void setOwner(ExdrOwnerEntity owner) {
+    public void setOwner(OwnerEntity owner) {
         this.owner = owner;
     }
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "type_transport")
-    public ExdrTypeOfVehicleEntity getType() {
+    public TypeOfVehicleEntity getType() {
         return type;
     }
 
-    public void setType(ExdrTypeOfVehicleEntity type) {
+    public void setType(TypeOfVehicleEntity type) {
         this.type = type;
     }
 
@@ -77,7 +77,7 @@ public class ExdrVehicleEntity implements Identifiable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ExdrVehicleEntity that = (ExdrVehicleEntity) o;
+        VehicleEntity that = (VehicleEntity) o;
         return yearOfIssue == that.yearOfIssue &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&

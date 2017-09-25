@@ -6,16 +6,16 @@
 
     <persistence-unit name="exdr_examinees" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <class>model.entity.ExdrCategoryEntity</class>
-        <class>model.entity.ExdrCertificateEntity</class>
-        <class>model.entity.ExdrExamEntity</class>
-        <class>model.entity.ExdrInspectionEntity</class>
-        <class>model.entity.ExdrLicenseOfDriverEntity</class>
-        <class>model.entity.ExdrOwnerEntity</class>
-        <class>model.entity.ExdrSchoolEntity</class>
-        <class>model.entity.ExdrVehicleEntity</class>
-        <class>model.entity.ExdrExamTypeEntity</class>
-        <class>model.entity.ExdrTypeOfVehicleEntity</class>
+        <class>model.entity.CategoryEntity</class>
+        <class>model.entity.CertificateEntity</class>
+        <class>model.entity.ExamEntity</class>
+        <class>model.entity.InspectionEntity</class>
+        <class>model.entity.LicenseOfDriverEntity</class>
+        <class>model.entity.OwnerEntity</class>
+        <class>model.entity.SchoolEntity</class>
+        <class>model.entity.VehicleEntity</class>
+        <class>model.entity.ExamTypeEntity</class>
+        <class>model.entity.TypeOfVehicleEntity</class>
         <properties>
             <property name="hibernate.transaction.jta.platform"
                       value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>

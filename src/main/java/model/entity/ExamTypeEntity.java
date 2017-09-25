@@ -6,11 +6,11 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "exdr_type_exams", schema = "public", catalog = "postgres")
-public class ExdrExamTypeEntity implements Identifiable {
+public class ExamTypeEntity implements Identifiable {
     private String id;
     private int numberOfMistakes;
     private int numberOfQuestions;
-    private List<ExdrExamEntity> exams;
+    private List<ExamEntity> exams;
 
     @Id
     @Column(name = "type_exam")
@@ -43,11 +43,11 @@ public class ExdrExamTypeEntity implements Identifiable {
     }
 
     @OneToMany(mappedBy = "examType")
-    public List<ExdrExamEntity> getExams() {
+    public List<ExamEntity> getExams() {
         return exams;
     }
 
-    public void setExams(List<ExdrExamEntity> exams) {
+    public void setExams(List<ExamEntity> exams) {
         this.exams = exams;
     }
 
@@ -55,7 +55,7 @@ public class ExdrExamTypeEntity implements Identifiable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ExdrExamTypeEntity that = (ExdrExamTypeEntity) o;
+        ExamTypeEntity that = (ExamTypeEntity) o;
         return numberOfMistakes == that.numberOfMistakes &&
                 numberOfQuestions == that.numberOfQuestions &&
                 Objects.equals(id, that.id) &&
