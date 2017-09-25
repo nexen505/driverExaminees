@@ -1,5 +1,6 @@
 package model.dao;
 
+import model.entity.Identifiable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -10,7 +11,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 @Repository
-public abstract class BasicDaoImpl<T, ID extends Serializable>
+public abstract class BasicDaoImpl<T extends Identifiable, ID extends Serializable>
         implements BasicDao<T, ID> {
 
     @PersistenceContext
@@ -34,31 +35,34 @@ public abstract class BasicDaoImpl<T, ID extends Serializable>
 
     @Override
     public void save(T entity) {
-        entityManager.persist(entity);
+        if (entity != null) entityManager.persist(entity);
     }
 
     @Override
     public void saveOrUpdate(T entity) {
-        entityManager.merge(entity);
+        if (entity != null) {
+            if (entity.getId() == null) save(entity);
+            else update(entity);
+        }
     }
 
     @Override
     public void update(T entity) {
-        entityManager.merge(entity);
+        if (entity != null) entityManager.merge(entity);
     }
 
     @Override
     public void remove(T entity) {
-        entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
+        if (entity != null) entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
     }
 
     @Override
     public T find(ID key) {
-        return (T) entityManager.find(daoType, key);
+        return key != null ? (T) entityManager.find(daoType, key) : null;
     }
 
     @Override
     public List<T> getAll() {
-        return (List<T>) entityManager.createQuery("* from " + daoType.getSimpleName() + " t").getResultList();
+        return (List<T>) entityManager.createQuery("* from " + daoType.getSimpleName() + " t").getResultList(); //TODO check this implementation
     }
 }
