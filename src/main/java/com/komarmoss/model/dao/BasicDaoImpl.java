@@ -15,7 +15,7 @@ public abstract class BasicDaoImpl<T extends Identifiable, ID extends Serializab
         implements BasicDao<T, ID> {
 
     @PersistenceContext
-    EntityManager entityManager;
+    protected EntityManager entityManager;
 
     protected Class daoType;
 
