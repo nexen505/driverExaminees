@@ -6,16 +6,16 @@
 
     <persistence-unit name="exdr_examinees" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <class>model.entity.CategoryEntity</class>
-        <class>model.entity.CertificateEntity</class>
-        <class>model.entity.ExamEntity</class>
-        <class>model.entity.InspectionEntity</class>
-        <class>model.entity.LicenseOfDriverEntity</class>
-        <class>model.entity.OwnerEntity</class>
-        <class>model.entity.SchoolEntity</class>
-        <class>model.entity.VehicleEntity</class>
-        <class>model.entity.ExamTypeEntity</class>
-        <class>model.entity.TypeOfVehicleEntity</class>
+        <class>com.komarmoss.model.entity.CategoryEntity</class>
+        <class>com.komarmoss.model.entity.CertificateEntity</class>
+        <class>com.komarmoss.model.entity.ExamEntity</class>
+        <class>com.komarmoss.model.entity.InspectionEntity</class>
+        <class>com.komarmoss.model.entity.LicenseOfDriverEntity</class>
+        <class>com.komarmoss.model.entity.OwnerEntity</class>
+        <class>com.komarmoss.model.entity.SchoolEntity</class>
+        <class>com.komarmoss.model.entity.VehicleEntity</class>
+        <class>com.komarmoss.model.entity.ExamTypeEntity</class>
+        <class>com.komarmoss.model.entity.TypeOfVehicleEntity</class>
         <properties>
             <property name="hibernate.transaction.jta.platform"
                       value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>

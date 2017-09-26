@@ -1,6 +1,6 @@
-package model.dao;
+package com.komarmoss.model.dao;
 
-import model.entity.Identifiable;
+import com.komarmoss.model.entity.Identifiable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

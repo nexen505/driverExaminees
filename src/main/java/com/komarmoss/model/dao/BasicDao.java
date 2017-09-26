@@ -1,4 +1,4 @@
-package model.dao;
+package com.komarmoss.model.dao;
 
 import java.io.Serializable;
 import java.util.List;
