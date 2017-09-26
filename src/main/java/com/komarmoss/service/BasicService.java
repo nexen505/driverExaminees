@@ -1,4 +1,4 @@
-package service;
+package com.komarmoss.service;
 
 import java.util.List;
 

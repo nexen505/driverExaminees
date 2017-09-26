@@ -1,4 +1,4 @@
-package service;
+package com.komarmoss.service;
 
 import com.komarmoss.model.dao.BasicDao;
 import org.springframework.stereotype.Service;
