@@ -14,6 +14,8 @@ public class InspectionEntity implements Identifiable {
 
     @Id
     @Column(name = "id_inspection")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_inspection_seq_name")
+    @SequenceGenerator(name = "id_inspection_seq_name", sequenceName = "id_inspection_seq", allocationSize = 1)
     public Integer getId() {
         return id;
     }

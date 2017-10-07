@@ -15,6 +15,8 @@ public class SchoolEntity implements Identifiable {
 
     @Id
     @Column(name = "id_school")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_school_seq_name")
+    @SequenceGenerator(name = "id_school_seq_name", sequenceName = "id_school_seq", allocationSize = 1)
     public Integer getId() {
         return id;
     }

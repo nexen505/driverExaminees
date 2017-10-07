@@ -16,6 +16,8 @@ public class LicenseOfDriverEntity implements Identifiable {
 
     @Id
     @Column(name = "id_license_of_driver")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_license_of_driver_seq_name")
+    @SequenceGenerator(name = "id_license_of_driver_seq_name", sequenceName = "id_license_of_driver_seq", allocationSize = 1)
     public Integer getId() {
         return id;
     }

@@ -14,6 +14,8 @@ public class CategoryEntity implements Identifiable {
 
     @Id
     @Column(name = "name_categories")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "name_categories_seq_name")
+    @SequenceGenerator(name = "name_categories_seq_name", sequenceName = "name_categories_seq", allocationSize = 1)
     public String getId() {
         return id;
     }

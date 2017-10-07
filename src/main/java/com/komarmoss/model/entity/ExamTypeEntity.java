@@ -14,6 +14,8 @@ public class ExamTypeEntity implements Identifiable {
 
     @Id
     @Column(name = "type_exam")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "type_exam_seq_name")
+    @SequenceGenerator(name = "type_exam_seq_name", sequenceName = "type_exam_seq", allocationSize = 1)
     public String getId() {
         return id;
     }

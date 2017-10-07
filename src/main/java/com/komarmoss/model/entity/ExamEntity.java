@@ -14,6 +14,7 @@ public class ExamEntity implements Identifiable {
     private ExamTypeEntity examType;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_exam")
     public Integer getId() {
         return id;

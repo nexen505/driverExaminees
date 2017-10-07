@@ -15,6 +15,8 @@ public class CertificateEntity implements Identifiable {
 
     @Id
     @Column(name = "id_certificate")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_certificate_seq_name")
+    @SequenceGenerator(name = "id_certificate_seq_name", sequenceName = "id_certificate_seq", allocationSize = 1)
     public Integer getId() {
         return id;
     }
