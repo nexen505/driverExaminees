@@ -66,7 +66,8 @@ CREATE TABLE exdr_license_of_driver
   date_of_issue        DATE,
   id_inspection        INTEGER NOT NULL
     CONSTRAINT fkbd0e5cd44711c6b6
-    REFERENCES exdr_inspection
+    REFERENCES exdr_inspection,
+  id_owner             INTEGER
 );
 
 ALTER TABLE exdr_certificate
@@ -83,6 +84,10 @@ CREATE TABLE exdr_owner
   patronymic    VARCHAR(255),
   surname       VARCHAR(255)
 );
+
+ALTER TABLE exdr_license_of_driver
+  ADD CONSTRAINT fkbd0e5cd45d430d7e
+FOREIGN KEY (id_owner) REFERENCES exdr_owner;
 
 CREATE TABLE exdr_school
 (

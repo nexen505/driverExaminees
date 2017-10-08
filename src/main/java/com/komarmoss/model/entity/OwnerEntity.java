@@ -77,8 +77,7 @@ public class OwnerEntity implements Identifiable {
         this.transportList = transportList;
     }
 
-    @OneToOne
-    @JoinColumn(name = "id_owner")
+    @OneToOne(mappedBy = "owner")
     public LicenseOfDriverEntity getLicense() {
         return license;
     }

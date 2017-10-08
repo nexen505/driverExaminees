@@ -36,7 +36,7 @@ public class LicenseOfDriverEntity implements Identifiable {
         this.dateOfIssue = dateOfIssue;
     }
 
-    @OneToOne(mappedBy = "license", cascade = {CascadeType.ALL})
+    @OneToOne
     @JoinColumn(name = "id_owner")
     public OwnerEntity getOwner() {
         return owner;
