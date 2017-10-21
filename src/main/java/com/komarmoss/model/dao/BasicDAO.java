@@ -5,7 +5,7 @@ import com.komarmoss.model.entity.Identifiable;
 import java.io.Serializable;
 import java.util.List;
 
-public interface BasicDao<T extends Identifiable, ID extends Serializable> {
+public interface BasicDAO<T extends Identifiable, ID extends Serializable> {
 
 //    String getQueryForAllObjects();
 

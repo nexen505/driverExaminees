@@ -14,15 +14,15 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Repository
-public abstract class BasicDaoImpl<T extends Identifiable, ID extends Serializable>
-        implements BasicDao<T, ID> {
+public abstract class BasicDAOImpl<T extends Identifiable, ID extends Serializable>
+        implements BasicDAO<T, ID> {
 
     @PersistenceContext
     protected EntityManager entityManager;
 
     protected Class daoType;
 
-    public BasicDaoImpl() {
+    public BasicDAOImpl() {
         Type t = getClass().getGenericSuperclass();
         ParameterizedType pt = (ParameterizedType) t;
         daoType = (Class) pt.getActualTypeArguments()[0];

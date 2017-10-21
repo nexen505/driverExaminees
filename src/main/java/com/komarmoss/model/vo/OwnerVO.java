@@ -42,6 +42,27 @@ public class OwnerVO implements Serializable {
         }
     }
 
+    public OwnerEntity createEntity() {
+        OwnerEntity ownerEntity = new OwnerEntity();
+        ownerEntity.setId(id);
+        ownerEntity.setName(name);
+        ownerEntity.setPatronymic(patronymic);
+        ownerEntity.setSurname(surname);
+        ownerEntity.setDateOfBirth(dateOfBirth);
+        if (license != null) {
+            LicenseOfDriverEntity license = new LicenseOfDriverEntity();
+            license.setId(license.getId());
+            ownerEntity.setLicense(license);
+        }
+        ownerEntity.setTransportList(vehicles.stream().map(vo -> {
+            if (vo == null) return null;
+            VehicleEntity vehicle = new VehicleEntity();
+            vehicle.setId(vo.getId());
+            return vehicle;
+        }).filter(Objects::nonNull).collect(Collectors.toList()));
+        return ownerEntity;
+    }
+
     public Integer getId() {
         return id;
     }
