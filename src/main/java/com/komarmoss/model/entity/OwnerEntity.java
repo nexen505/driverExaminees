@@ -5,15 +5,39 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Владелец транспортных средств. Имеет удостоверения и перечень транспортных средств.
+ */
 @Entity
 @Table(name = "exdr_owner", schema = "public", catalog = "postgres")
 public class OwnerEntity implements Identifiable {
+    /**
+     * Идентификатор
+     */
     private Integer id;
+    /**
+     * Имя владельца
+     */
     private String name;
+    /**
+     * Отчество владельца
+     */
     private String patronymic;
+    /**
+     * Фамилия владельца
+     */
     private String surname;
+    /**
+     * Дата рождения
+     */
     private Date dateOfBirth;
+    /**
+     * Транспортные средства владельца
+     */
     private List<VehicleEntity> transportList;
+    /**
+     * Водительское удостоверение
+     */
     private LicenseOfDriverEntity license;
 
     @Id

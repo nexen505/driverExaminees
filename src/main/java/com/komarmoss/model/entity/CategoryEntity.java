@@ -4,12 +4,27 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Категория водительского удостоверения. Определяет типы ТС, допустимых к вождению владельцем удостоверения.
+ */
 @Entity
 @Table(name = "exdr_categories", schema = "public", catalog = "postgres")
 public class CategoryEntity implements Identifiable {
+    /**
+     * Идентификатор
+     */
     private Integer id;
+    /**
+     * Название категории
+     */
     private String name;
+    /**
+     * Типы ТС, допущенные к управлению с данной категорией
+     */
     private List<TypeOfVehicleEntity> types;
+    /**
+     * Водительские удостоверения с данной категорией
+     */
     private List<LicenseOfDriverEntity> licenses;
 
     @Id

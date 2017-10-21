@@ -5,12 +5,31 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Водительское удостоверение.
+ */
 @Entity
 @Table(name = "exdr_license_of_driver", schema = "public", catalog = "postgres")
 public class LicenseOfDriverEntity implements Identifiable {
+    /**
+     * Идентификатор
+     */
     private Integer id;
+    /**
+     * Серия и номер удостоверения
+     */
+    private String series;
+    /**
+     * Дата выдачи
+     */
     private Date dateOfIssue;
+    /**
+     * Владелец удостоверения
+     */
     private OwnerEntity owner;
+    /**
+     * Категории удостоверения
+     */
     private List<CategoryEntity> categories;
 
     public LicenseOfDriverEntity() {
@@ -26,6 +45,16 @@ public class LicenseOfDriverEntity implements Identifiable {
 
     public void setId(Integer idLicenseOfDriver) {
         this.id = idLicenseOfDriver;
+    }
+
+    @Basic
+    @Column(name = "series")
+    public String getSeries() {
+        return series;
+    }
+
+    public void setSeries(String series) {
+        this.series = series;
     }
 
     @Basic
@@ -50,7 +79,7 @@ public class LicenseOfDriverEntity implements Identifiable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "exdr_certificate",
-            inverseJoinColumns = {@JoinColumn(name = "id_category")},
+            inverseJoinColumns = {@JoinColumn(name = "category")},
             joinColumns = {@JoinColumn(name = "id_license_of_driver")})
     public List<CategoryEntity> getCategories() {
         return categories;

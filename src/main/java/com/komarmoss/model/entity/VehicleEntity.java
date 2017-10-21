@@ -3,14 +3,35 @@ package com.komarmoss.model.entity;
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * Транспортное средство (ТС).
+ */
 @Entity
 @Table(name = "exdr_transport", schema = "public", catalog = "postgres")
 public class VehicleEntity implements Identifiable {
+    /**
+     * Идентификатор
+     */
     private Integer id;
+    /**
+     * Название модели транспортного средства
+     */
     private String name;
+    /**
+     * Марка модели транспортного средства
+     */
     private String brand;
+    /**
+     * Год выпуска транспортного средства
+     */
     private int yearOfIssue;
+    /**
+     * Владелец транспортного средства
+     */
     private OwnerEntity owner;
+    /**
+     * Тип транспортного средства
+     */
     private TypeOfVehicleEntity type;
 
     @Id
@@ -66,7 +87,7 @@ public class VehicleEntity implements Identifiable {
     }
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "type_transport")
+    @JoinColumn(name = "id_transport")
     public TypeOfVehicleEntity getType() {
         return type;
     }
