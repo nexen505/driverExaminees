@@ -11,8 +11,10 @@ public class LicenseOfDriverEntity implements Identifiable {
     private Integer id;
     private Date dateOfIssue;
     private OwnerEntity owner;
-    private List<CertificateEntity> certificates;
-    private InspectionEntity inspection;
+    private List<CategoryEntity> categories;
+
+    public LicenseOfDriverEntity() {
+    }
 
     @Id
     @Column(name = "id_license_of_driver")
@@ -46,23 +48,16 @@ public class LicenseOfDriverEntity implements Identifiable {
         this.owner = owner;
     }
 
-    @OneToMany(mappedBy = "license")
-    public List<CertificateEntity> getCertificates() {
-        return certificates;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "exdr_certificate",
+            inverseJoinColumns = {@JoinColumn(name = "id_category")},
+            joinColumns = {@JoinColumn(name = "id_license_of_driver")})
+    public List<CategoryEntity> getCategories() {
+        return categories;
     }
 
-    public void setCertificates(List<CertificateEntity> categories) {
-        this.certificates = categories;
-    }
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_inspection")
-    public InspectionEntity getInspection() {
-        return inspection;
-    }
-
-    public void setInspection(InspectionEntity inspection) {
-        this.inspection = inspection;
+    public void setCategories(List<CategoryEntity> categories) {
+        this.categories = categories;
     }
 
     @Override
@@ -73,12 +68,11 @@ public class LicenseOfDriverEntity implements Identifiable {
         return Objects.equals(id, that.id) &&
                 Objects.equals(dateOfIssue, that.dateOfIssue) &&
                 Objects.equals(owner, that.owner) &&
-                Objects.equals(certificates, that.certificates) &&
-                Objects.equals(inspection, that.inspection);
+                Objects.equals(categories, that.categories);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateOfIssue, owner, certificates, inspection);
+        return Objects.hash(id, dateOfIssue, owner, categories);
     }
 }

@@ -55,7 +55,7 @@ public class TypeOfVehicleEntity implements Identifiable {
     }
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "name_categories")
+    @JoinColumn(name = "id_category")
     public CategoryEntity getCategory() {
         return category;
     }

@@ -16,6 +16,73 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>komarov</id>
+            <properties>
+                <glassfish.autodeploy.path>
+                    D:/University/servers/payara-4.1.2.173/payara41/glassfish/domains/domain1/autodeploy
+                </glassfish.autodeploy.path>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+                        <executions>
+                            <execution>
+                                <id>copy</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <target>
+                                        <copy file="${project.build.directory}/${project.build.finalName}.war"
+                                              todir="${glassfish.autodeploy.path}"/>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>mossoulina</id>
+            <properties>
+                <glassfish.autodeploy.path>
+                    <!-- TODO add your server path, for example: D:/University/servers/payara-4.1.2.173/payara41/glassfish/domains/domain1/autodeploy-->
+                </glassfish.autodeploy.path>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+                        <executions>
+                            <execution>
+                                <id>copy</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <target>
+                                        <copy file="${project.build.directory}/${project.build.finalName}.war"
+                                              todir="${glassfish.autodeploy.path}"/>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -45,12 +112,6 @@
                 <version>2.1.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <!--<archive>-->
-                    <!--<manifest>-->
-                    <!--<addClasspath>true</addClasspath>-->
-                    <!--<classpathPrefix>lib/</classpathPrefix>-->
-                    <!--</manifest>-->
-                    <!--</archive>-->
                 </configuration>
             </plugin>
         </plugins>

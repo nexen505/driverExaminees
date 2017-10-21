@@ -1,5 +1,7 @@
 package com.komarmoss.model.entity;
 
-public interface Identifiable {
-    Object getId();
+import java.io.Serializable;
+
+public interface Identifiable extends Serializable {
+    Serializable getId();
 }

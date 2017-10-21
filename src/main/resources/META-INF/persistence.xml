@@ -8,27 +8,18 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>jdbc/ExdrPool</jta-data-source>
         <class>com.komarmoss.model.entity.CategoryEntity</class>
-        <class>com.komarmoss.model.entity.CertificateEntity</class>
-        <class>com.komarmoss.model.entity.ExamEntity</class>
-        <class>com.komarmoss.model.entity.InspectionEntity</class>
         <class>com.komarmoss.model.entity.LicenseOfDriverEntity</class>
         <class>com.komarmoss.model.entity.OwnerEntity</class>
-        <class>com.komarmoss.model.entity.SchoolEntity</class>
         <class>com.komarmoss.model.entity.VehicleEntity</class>
-        <class>com.komarmoss.model.entity.ExamTypeEntity</class>
         <class>com.komarmoss.model.entity.TypeOfVehicleEntity</class>
         <properties>
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-            <property name="javax.persistence.schema-generation.create-source" value="script"/>
-            <property name="javax.persistence.schema-generation.create-script-source" value="META-INF/create.sql"/>
-            <property name="javax.persistence.schema-generation.drop-source" value="script"/>
-            <property name="javax.persistence.schema-generation.drop-script-source" value="META-INF/drop.sql"/>
-            <property name="javax.persistence.sql-load-script-source" value="META-INF/data.sql"/>
-
             <property name="hibernate.transaction.jta.platform"
                       value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <property name="hibernate.generate_statistics" value="true"/>
             <!--<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/postgres"/>-->
             <!--<property name="hibernate.connection.username" value="postgres"/>-->
             <!--<property name="hibernate.connection.password" value="postgres"/>-->

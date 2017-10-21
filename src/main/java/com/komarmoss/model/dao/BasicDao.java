@@ -1,18 +1,29 @@
 package com.komarmoss.model.dao;
 
+import com.komarmoss.model.entity.Identifiable;
+
 import java.io.Serializable;
 import java.util.List;
 
-public interface BasicDao<T, ID extends Serializable> {
-    void save(T entity);
+public interface BasicDao<T extends Identifiable, ID extends Serializable> {
 
-    void saveOrUpdate(T entity);
+//    String getQueryForAllObjects();
 
-    void update(T entity);
+    T getItemById(final ID id);
 
-    void remove(T entity);
+    List<T> getItemsByIds(final List<ID> ids);
 
-    T find(ID key);
+    List<T> getAllItems();
 
-    List<T> getAll();
+    ID saveItem(T entity);
+
+    List<ID> saveItems(List<T> items);
+
+    void saveOrUpdateItem(T entity);
+
+    void updateItem(T entity);
+
+    void removeItem(T entity);
+
+    void removeItemById(final ID id);
 }
