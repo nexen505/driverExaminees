@@ -9,7 +9,7 @@ public class VehicleVO implements Serializable {
     private Integer id;
     private String name;
     private String brand;
-    private int yearOfIssue;
+    private Integer yearOfIssue;
     private VehicleTypeVO type;
 
     public VehicleVO() {
@@ -25,6 +25,22 @@ public class VehicleVO implements Serializable {
             if (vehicleType != null)
                 type = new VehicleTypeVO(vehicleType);
         }
+    }
+
+    public VehicleEntity createEntity() {
+        VehicleEntity vehicleEntity = new VehicleEntity();
+        vehicleEntity.setId(id);
+        vehicleEntity.setName(name);
+        vehicleEntity.setBrand(brand);
+        vehicleEntity.setYearOfIssue(yearOfIssue);
+
+        if (type != null) {
+            TypeOfVehicleEntity typeOfVehicleEntity = new TypeOfVehicleEntity();
+            typeOfVehicleEntity.setId(type.getId());
+            vehicleEntity.setType(typeOfVehicleEntity);
+        }
+
+        return vehicleEntity;
     }
 
     public Integer getId() {

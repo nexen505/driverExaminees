@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Тип ТС. Определяет категории, необходимые для допуска к управлению.
+ * Тип ТС.
  */
 @Entity
 @Table(name = "exdr_type_of_vehicle", schema = "public", catalog = "postgres")
@@ -21,22 +21,29 @@ public class TypeOfVehicleEntity implements Identifiable {
     /**
      * Минимальный вес в тоннах
      */
-    private float minimumWeight;
+    private Float minimumWeight;
     /**
      * Максимальный вес в тоннах
      */
-    private float maximumWeight;
+    private Float maximumWeight;
     /**
      * ТС данного типа
      */
     private List<VehicleEntity> vehicles;
-    /**
-     * Категория для допуска к управлению данным типом ТС
-     */
-    private CategoryEntity category;
+
+    public TypeOfVehicleEntity() {
+    }
+
+    public TypeOfVehicleEntity(Integer id, String name, Float minimumWeight, Float maximumWeight, List<VehicleEntity> vehicles) {
+        this.id = id;
+        this.name = name;
+        this.minimumWeight = minimumWeight;
+        this.maximumWeight = maximumWeight;
+        this.vehicles = vehicles;
+    }
 
     @Id
-    @Column(name = "id_transport")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "type_transport_seq_name")
     @SequenceGenerator(name = "type_transport_seq_name", sequenceName = "type_transport_seq", allocationSize = 1)
     public Integer getId() {
@@ -48,7 +55,7 @@ public class TypeOfVehicleEntity implements Identifiable {
     }
 
     @Basic
-    @Column(name = "transport_name")
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -59,21 +66,21 @@ public class TypeOfVehicleEntity implements Identifiable {
 
     @Basic
     @Column(name = "minimum_weight")
-    public float getMinimumWeight() {
+    public Float getMinimumWeight() {
         return minimumWeight;
     }
 
-    public void setMinimumWeight(float minimumWeight) {
+    public void setMinimumWeight(Float minimumWeight) {
         this.minimumWeight = minimumWeight;
     }
 
     @Basic
     @Column(name = "maximum_weight")
-    public float getMaximumWeight() {
+    public Float getMaximumWeight() {
         return maximumWeight;
     }
 
-    public void setMaximumWeight(float maximumWeight) {
+    public void setMaximumWeight(Float maximumWeight) {
         this.maximumWeight = maximumWeight;
     }
 
@@ -86,16 +93,6 @@ public class TypeOfVehicleEntity implements Identifiable {
         this.vehicles = vehicles;
     }
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_category")
-    public CategoryEntity getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryEntity category) {
-        this.category = category;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -104,12 +101,11 @@ public class TypeOfVehicleEntity implements Identifiable {
         return Float.compare(that.minimumWeight, minimumWeight) == 0 &&
                 Float.compare(that.maximumWeight, maximumWeight) == 0 &&
                 Objects.equals(id, that.id) &&
-                Objects.equals(vehicles, that.vehicles) &&
-                Objects.equals(category, that.category);
+                Objects.equals(vehicles, that.vehicles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, minimumWeight, maximumWeight, vehicles, category);
+        return Objects.hash(id, minimumWeight, maximumWeight, vehicles);
     }
 }

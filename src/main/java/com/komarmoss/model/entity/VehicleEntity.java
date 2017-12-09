@@ -24,7 +24,7 @@ public class VehicleEntity implements Identifiable {
     /**
      * Год выпуска транспортного средства
      */
-    private int yearOfIssue;
+    private Integer yearOfIssue;
     /**
      * Владелец транспортного средства
      */
@@ -34,8 +34,21 @@ public class VehicleEntity implements Identifiable {
      */
     private TypeOfVehicleEntity type;
 
+    public VehicleEntity() {
+    }
+
+    public VehicleEntity(Integer id, String name, String brand, Integer yearOfIssue, OwnerEntity owner, TypeOfVehicleEntity type) {
+        this.id = id;
+        this.name = name;
+        this.brand = brand;
+        this.yearOfIssue = yearOfIssue;
+        this.owner = owner;
+        this.type = type;
+    }
+
+
     @Id
-    @Column(name = "id_transport")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_transport_seq_name")
     @SequenceGenerator(name = "id_transport_seq_name", sequenceName = "id_transport_seq", allocationSize = 1)
     public Integer getId() {
@@ -47,7 +60,7 @@ public class VehicleEntity implements Identifiable {
     }
 
     @Basic
-    @Column(name = "name_transport")
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -57,7 +70,7 @@ public class VehicleEntity implements Identifiable {
     }
 
     @Basic
-    @Column(name = "brand_transport")
+    @Column(name = "brand")
     public String getBrand() {
         return brand;
     }
@@ -68,11 +81,11 @@ public class VehicleEntity implements Identifiable {
 
     @Basic
     @Column(name = "year_of_issue")
-    public int getYearOfIssue() {
+    public Integer getYearOfIssue() {
         return yearOfIssue;
     }
 
-    public void setYearOfIssue(int yearOfIssue) {
+    public void setYearOfIssue(Integer yearOfIssue) {
         this.yearOfIssue = yearOfIssue;
     }
 
@@ -87,7 +100,7 @@ public class VehicleEntity implements Identifiable {
     }
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_transport")
+    @JoinColumn(name = "type_id")
     public TypeOfVehicleEntity getType() {
         return type;
     }
@@ -101,7 +114,7 @@ public class VehicleEntity implements Identifiable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VehicleEntity that = (VehicleEntity) o;
-        return yearOfIssue == that.yearOfIssue &&
+        return Objects.equals(yearOfIssue, that.yearOfIssue) &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(brand, that.brand) &&

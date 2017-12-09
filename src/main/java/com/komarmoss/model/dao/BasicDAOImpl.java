@@ -52,7 +52,7 @@ public abstract class BasicDAOImpl<T extends Identifiable, ID extends Serializab
 
     @Override
     public List<T> getAllItems() {
-        return (List<T>) entityManager.createQuery("* from " + daoType.getSimpleName()).getResultList();
+        return (List<T>) entityManager.createQuery("select c from " + daoType.getSimpleName() + " c", daoType).getResultList();
     }
 
     @Override

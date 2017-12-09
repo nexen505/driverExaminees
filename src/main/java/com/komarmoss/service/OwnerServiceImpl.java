@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,7 +23,10 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public List<OwnerVO> findOwners() {
-        return ownerDAO.getAllItems().stream().map(OwnerVO::new).filter(Objects::nonNull).collect(Collectors.toList());
+        return ownerDAO.getAllItems()
+                .parallelStream()
+                .map(OwnerVO::new)
+                .collect(Collectors.toList());
     }
 
     @Override

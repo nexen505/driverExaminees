@@ -22,6 +22,15 @@ public class VehicleTypeVO implements Serializable {
         }
     }
 
+    public TypeOfVehicleEntity createEntity() {
+        TypeOfVehicleEntity typeOfVehicleEntity = new TypeOfVehicleEntity();
+        typeOfVehicleEntity.setId(id);
+        typeOfVehicleEntity.setName(name);
+        typeOfVehicleEntity.setMaximumWeight(maximumWeight);
+        typeOfVehicleEntity.setMinimumWeight(minimumWeight);
+        return typeOfVehicleEntity;
+    }
+
     public Integer getId() {
         return id;
     }

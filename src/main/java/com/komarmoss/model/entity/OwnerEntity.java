@@ -35,13 +35,9 @@ public class OwnerEntity implements Identifiable {
      * Транспортные средства владельца
      */
     private List<VehicleEntity> transportList;
-    /**
-     * Водительское удостоверение
-     */
-    private LicenseOfDriverEntity license;
 
     @Id
-    @Column(name = "id_owner")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_owner_seq_name")
     @SequenceGenerator(name = "id_owner_seq_name", sequenceName = "id_owner_seq", allocationSize = 1)
     public Integer getId() {
@@ -101,15 +97,6 @@ public class OwnerEntity implements Identifiable {
         this.transportList = transportList;
     }
 
-    @OneToOne(mappedBy = "owner")
-    public LicenseOfDriverEntity getLicense() {
-        return license;
-    }
-
-    public void setLicense(LicenseOfDriverEntity license) {
-        this.license = license;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -120,12 +107,11 @@ public class OwnerEntity implements Identifiable {
                 Objects.equals(patronymic, that.patronymic) &&
                 Objects.equals(surname, that.surname) &&
                 Objects.equals(dateOfBirth, that.dateOfBirth) &&
-                Objects.equals(transportList, that.transportList) &&
-                Objects.equals(license, that.license);
+                Objects.equals(transportList, that.transportList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, patronymic, surname, dateOfBirth, transportList, license);
+        return Objects.hash(id, name, patronymic, surname, dateOfBirth, transportList);
     }
 }

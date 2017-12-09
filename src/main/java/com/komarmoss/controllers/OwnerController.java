@@ -18,14 +18,12 @@ public class OwnerController {
 
     @RequestMapping(value = "/owners", method = RequestMethod.GET)
     public WebResponseVO findOwner(@RequestParam(name = "id", required = false) Integer id) {
-        return id != null ?
-                new WebResponseVO(ownerService.findOwner(id)) :
-                new WebResponseVO(ownerService.findOwners());
+        return new WebResponseVO(id != null ? ownerService.findOwner(id) : ownerService.findOwners());
     }
 
     @RequestMapping(value = "/owners", method = {RequestMethod.POST, RequestMethod.PUT})
-    public WebResponseVO saveOrUpdateOwner(@RequestBody OwnerVO owner) {
-        return new WebResponseVO(ownerService.saveOrUpdateOwner(owner));
+    public WebResponseVO saveOrUpdateOwner(@RequestBody OwnerVO ownerVO) {
+        return new WebResponseVO(ownerService.saveOrUpdateOwner(ownerVO));
     }
 
     @RequestMapping(value = "/owners", method = RequestMethod.DELETE)

@@ -1,6 +1,6 @@
 package com.komarmoss.model.vo;
 
-import com.komarmoss.model.entity.LicenseOfDriverEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.komarmoss.model.entity.OwnerEntity;
 import com.komarmoss.model.entity.VehicleEntity;
 
@@ -17,9 +17,9 @@ public class OwnerVO implements Serializable {
     private String name;
     private String patronymic;
     private String surname;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
     private List<VehicleVO> vehicles = Collections.emptyList();
-    private LicenseOfDriverVO license;
 
     public OwnerVO() {
     }
@@ -34,11 +34,10 @@ public class OwnerVO implements Serializable {
 
             List<VehicleEntity> transportList = entity.getTransportList();
             if (transportList != null)
-                vehicles = transportList.stream().map(VehicleVO::new).filter(Objects::nonNull).collect(Collectors.toList());
+                vehicles = transportList.parallelStream()
+                        .map(VehicleVO::new)
+                        .collect(Collectors.toList());
 
-            LicenseOfDriverEntity entityLicense = entity.getLicense();
-            if (entityLicense != null)
-                this.license = new LicenseOfDriverVO(entityLicense);
         }
     }
 
@@ -49,15 +48,12 @@ public class OwnerVO implements Serializable {
         ownerEntity.setPatronymic(patronymic);
         ownerEntity.setSurname(surname);
         ownerEntity.setDateOfBirth(dateOfBirth);
-        if (license != null) {
-            LicenseOfDriverEntity license = new LicenseOfDriverEntity();
-            license.setId(license.getId());
-            ownerEntity.setLicense(license);
-        }
-        ownerEntity.setTransportList(vehicles.stream().map(vo -> {
+
+        ownerEntity.setTransportList(vehicles.parallelStream().map(vo -> {
             if (vo == null) return null;
             VehicleEntity vehicle = new VehicleEntity();
             vehicle.setId(vo.getId());
+            vehicle.setOwner(ownerEntity);
             return vehicle;
         }).filter(Objects::nonNull).collect(Collectors.toList()));
         return ownerEntity;
@@ -111,11 +107,4 @@ public class OwnerVO implements Serializable {
         this.vehicles = vehicles;
     }
 
-    public LicenseOfDriverVO getLicense() {
-        return license;
-    }
-
-    public void setLicense(LicenseOfDriverVO license) {
-        this.license = license;
-    }
 }
