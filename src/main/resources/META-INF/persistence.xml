@@ -7,8 +7,6 @@
     <persistence-unit name="exdr_examinees" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>jdbc/ExdrPool</jta-data-source>
-        <class>com.komarmoss.model.entity.CategoryEntity</class>
-        <class>com.komarmoss.model.entity.LicenseOfDriverEntity</class>
         <class>com.komarmoss.model.entity.OwnerEntity</class>
         <class>com.komarmoss.model.entity.VehicleEntity</class>
         <class>com.komarmoss.model.entity.TypeOfVehicleEntity</class>
