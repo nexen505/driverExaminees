@@ -4,10 +4,6 @@
         <form id="search">
             Search <input name="query" v-model="searchQuery">
         </form>
-        <button v-on:click="removeElement(key)">Delete</button>
-        <button>Edit</button>
-        <button>Add</button>
-
         <demo-grid
                 :data="gridData"
                 :columns="gridColumns"
@@ -17,9 +13,6 @@
 
     </div>
 </template>
-
-
-
 
 <script>
     import DemoGrid from './DemoGrid.vue'
@@ -31,20 +24,24 @@
         data() {
             return {
                 searchQuery: '',
-                gridColumns: ['name', 'power', 'age'],
+                gridColumns: {
+                    surname: "Surname",
+                    name : 'name',
+                    patronymic:'patronymic',
+                    dateOfBirth: 'Date Of Birth'},
                 gridData: [
-                    {name: 'Chuck Norris', power: Infinity, age: 23},
-                    {name: 'Bruce Lee', power: 9000, age: 21},
-                    {name: 'Jackie Chan', power: 7000, age: 20},
-                    {name: 'Jet Li', power: 8000, age: 2},
+                    {id: "fdsdf", surname:'Smith', name:'Adam', patronymic:'Ara', dateOfBirth:'12-12-2001'},
+                    {surname:'Black', name:'Petr', patronymic:'Eres', dateOfBirth:'07-04-2001'},
+                    {surname:'White', name:'Carl', patronymic:'Fare', dateOfBirth:'07-04-2001'},
+                    {surname:'Lens', name:'Sara', patronymic:'Ynsa', dateOfBirth:'07-04-2001'},
                 ],
                 selected: []
             }
         },
         methods: {
-            removeElement: function (index) {
-                this.items.splice(index, 1);
-            }
+            // removeElement: function (index) {
+            //     this.items.splice(index, 1);
+            // }
         }
     }
 </script>
