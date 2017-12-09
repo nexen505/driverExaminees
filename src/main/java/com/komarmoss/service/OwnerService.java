@@ -10,7 +10,7 @@ public interface OwnerService {
 
     OwnerVO findOwner(Integer id);
 
-    Integer saveOrUpdateOwner(OwnerVO owner);
+    OwnerVO saveOrUpdateOwner(OwnerVO owner);
 
     boolean removeOwner(Integer id);
 }

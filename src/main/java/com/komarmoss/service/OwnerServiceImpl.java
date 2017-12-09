@@ -35,10 +35,11 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public Integer saveOrUpdateOwner(OwnerVO owner) {
+    public OwnerVO saveOrUpdateOwner(OwnerVO owner) {
         OwnerEntity ownerEntity = owner.createEntity();
         ownerDAO.saveOrUpdateItem(ownerEntity);
-        return ownerEntity.getId();
+        Integer id = ownerEntity.getId();
+        return findOwner(id);
     }
 
     @Override

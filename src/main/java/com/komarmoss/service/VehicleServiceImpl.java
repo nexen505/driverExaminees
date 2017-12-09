@@ -35,10 +35,10 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public Integer saveOrUpdateVehicle(VehicleVO vehicle) {
-        VehicleEntity ownerEntity = vehicle.createEntity();
-        vehicleDAO.saveOrUpdateItem(ownerEntity);
-        return ownerEntity.getId();
+    public VehicleVO saveOrUpdateVehicle(VehicleVO vehicle) {
+        VehicleEntity vehicleEntity = vehicle.createEntity();
+        vehicleDAO.saveOrUpdateItem(vehicleEntity);
+        return findVehicle(vehicleEntity.getId());
     }
 
     @Override
