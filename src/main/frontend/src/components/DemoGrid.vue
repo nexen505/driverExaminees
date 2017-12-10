@@ -20,15 +20,16 @@
                 {{entry[key]}}
             </td>
             <td>
-            <button class="btn btn-default" @click="deleterow(entry)">
+          <button class="btn btn-default" @click="editRow(entry)">
+            <span class="glyphicon glyphicon-edit" style="margin-top: 3px;"></span> Edit
+                </button>
+            <button class="btn btn-default" @click="deleteRow(entry)">
                 <span class="glyphicon glyphicon-delete" style="margin-top: 3px;"></span> Delete
                 </button>
-            <button class="btn btn-default" @click="editrow(entry)">Edit Post</button>
           </td>
         </tr>
         </tbody>
     </table>
-
 </template>
 
 <script>
@@ -38,7 +39,7 @@ export default {
   },
   props: {
     data: Array,
-    columns: Array,
+    columns: Object,
     filterKey: String
   },
   data: function() {
@@ -47,9 +48,11 @@ export default {
       sortOrders[key] = 1;
     });
     return {
+      gridData: [],
+      showRight: false,
       sortKey: "",
       sortOrders: sortOrders,
-      checked: []
+      showNewEditModal: false
     };
   },
   computed: {
@@ -89,9 +92,38 @@ export default {
       this.sortKey = key;
       this.sortOrders[key] = this.sortOrders[key] * -1;
     },
-    destory: function(id) {
-      this.gridData.splice(id, 1);
-      //                this.items.$remove(item)
+    deleteRow: function(report) {
+      var dataparams = {
+        id: report.id,
+        _token: "delete"
+      };
+      // this.$http.post(
+      //   "http://crossorigin.me/http://codepen.io/billmurrin/pen/EKXbyZ.js",
+      //   dataparams,
+      //   {
+      //     xhr: {
+      //       onreadystatechange: function(response) {
+      //         if (this.readyState === 4) {
+      //           console.log(this.status);
+      //           console.log(this.response);
+      //           return;
+      //         }
+      //       }
+      //     }
+      //   }
+      // );
+
+      alert("This ID would get deleted: " + report.id);
+      console.log(report);
+      console.log(this.data);
+      var index = this.data.indexOf(report);
+      this.data.splice(index, 1);
+      this.showRight = !this.showRight;
+    },
+    editRow: function(report) {
+      console.log("edit");
+      this.$root.$emit("edit", report);
+      this.showNewEditModal = true;
     }
   }
 };
