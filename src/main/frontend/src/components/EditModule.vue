@@ -7,12 +7,20 @@
 
       <div class="modal-body">
         <label class="form-label">
-                    Title
-                    <input v-model="title" class="form-control">
+                    Name
+                    <input v-model="name" class="form-control">
                 </label>
         <label class="form-label">
-                    Body
-                    <textarea v-model="body" rows="5" class="form-control"></textarea>
+                    Surname
+                    <input v-model="surname" class="form-control">
+                </label>
+        <label class="form-label">
+                    Patronymic
+                    <input v-model="patronymic" class="form-control">
+                </label>
+        <label class="form-label">
+                    Date of B-day
+                    <input v-model="dateOfBirth" class="form-control">
                 </label>
       </div>
 
@@ -36,8 +44,10 @@ export default {
   data: function() {
     return {
       id: "",
-      title: "",
-      body: ""
+      name: "",
+      surname: "",
+      patronymic: "",
+      dateOfBirth: ""
     };
   },
   created() {
@@ -45,9 +55,10 @@ export default {
     this.$root.$on("edit", report => {
       console.log(report);
       this.id = report.id;
-      this.title = report.name;
-      this.body = report.surname;
-      this.show = true;
+      this.name = report.name;
+      this.surname = report.surname;
+      this.patronymic = report.patronymic;
+      this.dateOfBirth = report.dateOfBirth;
     });
   },
 
@@ -57,10 +68,11 @@ export default {
 
   methods: {
     close: function() {
-      this.show = false;
-      this.title = "";
-      this.body = "";
       this.id = "";
+      this.name = "";
+      this.surname = "";
+      this.patronymic = "";
+      this.dateOfBirth = "";
     },
 
     refresh: function() {
@@ -72,8 +84,10 @@ export default {
 
       var dataparams = {
         id: this.id,
-        name: this.title,
-        description: this.body
+        name: this.name,
+        surname: this.surname,
+        patronymic: this.patronymic,
+        dateOfBirth: this.dateOfBirth
       };
       console.log("Updating Post");
       this.$http.post(
