@@ -10,7 +10,7 @@
                     :data="ownersData"
                     :columns="ownerColumns"
                     :filter-key="searchQuery"
-                    :delete-url="'http://localhost:8080/driverApp/rest/owners'">
+                    :delete-url="'http://192.168.0.102:8080/driverApp/rest/owners'">
             </demo-grid>
         </div>
         <div class="owner-wrapper" v-show="isSelected">
@@ -27,11 +27,18 @@
                         Найти <input name="query" v-model="searchVehiclesQuery">
                     </form>
                     <demo-grid
+                            v-on:edit="editVehicle"
                             :data="ownerVehiclesData"
                             :columns="vehicleColumns"
                             :filter-key="searchVehiclesQuery"
-                            :delete-url="'http://localhost:8080/driverApp/rest/owners'">
+                            :delete-url="'http://192.168.0.102:8080/driverApp/rest/vehicles'">
                     </demo-grid>
+                    <edit-vehicle 
+                                v-show="isSelectedEditedVehicle"
+                                v-on:closeVehicle="closeVehicle"
+                                v-if="vehicle!=null"
+                                :vehicle="vehicle">
+                    </edit-vehicle>
                 </v-tab>
             </vue-tabs>
         </div>
@@ -41,6 +48,7 @@
 <script>
     import DemoGrid from "./DemoGrid.vue";
     import EditModule from "./EditModule.vue";
+    import EditVehicle from "./EditVehicle.vue";
     import {VTab, VueTabs} from 'vue-nav-tabs'
     import 'vue-nav-tabs/themes/vue-tabs.css'
     import moment from 'moment';
@@ -50,6 +58,7 @@
         components: {
             DemoGrid,
             EditModule,
+            EditVehicle,
             VueTabs,
             VTab
         },
@@ -68,6 +77,7 @@
                 },
 
                 owner: null,
+                vehicle: null,
                 ownerVehiclesData: [],
                 vehicleColumns: {
                     name: 'Название',
@@ -84,7 +94,7 @@
             },
             editOwner: function(owner) {
                 console.log("need to load owner full", owner);
-                let url = 'http://localhost:8080/driverApp/rest/owners';
+                let url = 'http://192.168.0.102:8080/driverApp/rest/owners';
                 this.$http.get(url, {
                     params: {
                         id: owner.id
@@ -95,21 +105,35 @@
                             console.log(res);
                             this.owner = res.body.result;
                             this.owner.dateOfBirth = moment(this.owner.dateOfBirth, 'YYYY-MM-DD').toDate();
+                            this.ownerVehiclesData = this.owner.vehicles;
                             this.isSelected = true;
                             console.log("owner is loaded");
                         },
                         error => console.log(error)
                     );
+            },
+            closeVehicle: function () {
+                console.log('closing vehicle form..');
+                this.isSelectedEditedVehicle = false;
+                this.vehicle = null;
+            },
+            editVehicle: function(vehicle) {
+                console.log("need to load vehicle full", vehicle);
+                this.isSelectedEditedVehicle = true;
+                this.vehicle = vehicle;
             }
         },
         beforeCreate() {
             this.$root.$on('loadOwners', evt => {
-                let url = 'http://localhost:8080/driverApp/rest/owners';
+                let url = 'http://192.168.0.102:8080/driverApp/rest/owners';
                 this.$http.get(url)
                     .then(function (data) {
                         console.log(data);
                         this.ownersData = data.body.result;
                     });
+            });
+            this.$root.$on('loadVehicles', evt => {
+               this.editOwner(this.owner);
             });
         },
         beforeDestroy() {
