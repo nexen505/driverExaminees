@@ -5,32 +5,40 @@
         </div>
         <div class="demo">
             <div class="owners-wrapper">
-                <button class="btn btn-success owner-add-btn" v-on:click="addOwner">
+                <button class="btn btn-success add-btn" v-on:click="addOwner">
                     <span class="glyphicon glyphicon-add" style="margin-top: 3px;"></span> Добавить
                 </button>
-                <form class="search" id="searchOwner">
-                    Найти <input name="query" v-model="searchQuery">
-                </form>
-                <demo-grid
-                        v-on:edit="editOwner"
-                        :data="ownersData"
-                        :columns="ownerColumns"
-                        :filter-key="searchQuery"
-                        :delete-url="'http://localhost:8080/driverApp/rest/owners'">
-                </demo-grid>
+                <div v-if="ownersData.length">
+                    <form class="search" id="searchOwner">
+                        Найти <input name="query" v-model="searchQuery">
+                    </form>
+                    <demo-grid
+                            v-on:edit="editOwner"
+                            :data="ownersData"
+                            :columns="ownerColumns"
+                            :filter-key="searchQuery"
+                            :delete-url="'http://localhost:8080/driverApp/rest/owners'">
+                    </demo-grid>
+                </div>
+                <div v-else>
+
+                </div>
             </div>
             <div class="owner-wrapper" v-show="isSelected">
                 <vue-tabs>
                     <v-tab title="Данные о владельце">
                         <div class="tab-content">
-                            <edit-module v-on:closeOwner="closeOwner"
-                                         v-if="owner!=null"
-                                         :owner="owner"></edit-module>
+                            <edit-owner v-on:closeOwner="closeOwner"
+                                        v-if="owner!=null"
+                                        :owner="owner"></edit-owner>
                         </div>
                     </v-tab>
                     <v-tab title="Данные о ТС"
                            v-if="owner && owner.id">
                         <div class="tab-content">
+                            <button class="btn btn-success add-btn" v-on:click="addVehicle">
+                                <span class="glyphicon glyphicon-add" style="margin-top: 3px;"></span> Добавить
+                            </button>
                             <div v-if="ownerVehiclesData.length">
                                 <form class="search"
                                       id="searchVehicle">
@@ -43,16 +51,15 @@
                                         :filter-key="searchVehiclesQuery"
                                         :delete-url="'http://localhost:8080/driverApp/rest/vehicles'">
                                 </demo-grid>
-                                <edit-vehicle
-                                        v-show="isSelectedEditedVehicle"
-                                        v-on:closeVehicle="closeVehicle"
-                                        v-if="vehicle!=null"
-                                        :vehicle="vehicle">
-                                </edit-vehicle>
                             </div>
                             <div v-else>
 
                             </div>
+                            <edit-vehicle
+                                    v-if="isSelectedEditedVehicle && vehicle!=null"
+                                    v-on:closeVehicle="closeVehicle"
+                                    :vehicle="vehicle">
+                            </edit-vehicle>
                         </div>
                     </v-tab>
                 </vue-tabs>
@@ -63,7 +70,7 @@
 
 <script>
     import DemoGrid from "./DemoGrid.vue";
-    import EditModule from "./EditModule.vue";
+    import EditOwner from "./EditOwner.vue";
     import EditVehicle from "./EditVehicle.vue";
     import {VTab, VueTabs} from 'vue-nav-tabs'
     import 'vue-nav-tabs/themes/vue-tabs.css'
@@ -73,7 +80,7 @@
         name: "demo",
         components: {
             DemoGrid,
-            EditModule,
+            EditOwner,
             EditVehicle,
             VueTabs,
             VTab
@@ -83,6 +90,7 @@
                 searchQuery: '',
                 searchVehiclesQuery: '',
                 isSelected: false,
+                isSelectedEditedVehicle: false,
 
                 ownersData: [],
                 ownerColumns: {
@@ -129,22 +137,33 @@
                         error => console.log(error)
                     );
             },
-            closeVehicle: function () {
-                console.log('closing vehicle form..');
-                this.isSelectedEditedVehicle = false;
-                this.vehicle = null;
-            },
-            editVehicle: function(vehicle) {
-                console.log("need to load vehicle full", vehicle);
-                this.isSelectedEditedVehicle = true;
-                this.vehicle = vehicle;
-            }
             addOwner: function () {
                 this.owner = {};
                 this.owner.dateOfBirth = moment(new Date(), 'YYYY-MM-DD').toDate();
                 this.ownerVehiclesData = [];
                 this.isSelected = true;
-            }
+            },
+
+            closeVehicle: function () {
+                console.log('closing vehicle form..');
+                this.isSelectedEditedVehicle = false;
+                this.vehicle = null;
+            },
+            editVehicle: function (vehicle) {
+                console.log("need to load vehicle full", vehicle);
+                this.isSelectedEditedVehicle = true;
+                this.vehicle = vehicle;
+            },
+            addVehicle: function () {
+                this.editVehicle({
+                    owner: {
+                        id: this.owner.id
+                    },
+                    type: {
+                        id: null
+                    }
+                });
+            },
         },
         beforeCreate() {
             this.$root.$on('loadOwners', evt => {
@@ -156,7 +175,7 @@
                     });
             });
             this.$root.$on('loadVehicles', evt => {
-               this.editOwner(this.owner);
+                this.editOwner(this.owner);
             });
         },
         beforeDestroy() {
@@ -177,16 +196,13 @@
             flex-direction: column;
             flex: 1 1 100%;
             padding: 10px;
-        }
-        .owners-wrapper {
-            padding: 10px;
             .search {
                 margin: 5px 0;
                 input {
                     width: 250px;
                 }
             }
-            .owner-add-btn {
+            .add-btn {
                 margin: 10px 0;
                 display: block;
                 width: 100px;

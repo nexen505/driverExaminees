@@ -3,8 +3,8 @@
         <thead>
         <tr>
             <th v-for="(value, key) in columns"
+                v-on:click="sortBy(key)"
                 :key="key"
-                @click="sortBy(key)"
                 :class="{ active: sortKey === key }">
                 {{ value | capitalize }}
                 <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
@@ -20,10 +20,10 @@
                 {{entry[key]}}
             </td>
             <td>
-                <button class="btn btn-default" @click="editRow(entry)">
+                <button class="btn btn-default" v-on:click="editRow(entry)">
                     <span class="glyphicon glyphicon-edit" style="margin-top: 3px;"></span> Редактировать
                 </button>
-                <button class="btn btn-default" @click="deleteRow(entry)">
+                <button class="btn btn-default" v-on:click="deleteRow(entry)">
                     <span class="glyphicon glyphicon-delete" style="margin-top: 3px;"></span> Удалить
                 </button>
             </td>
@@ -34,9 +34,6 @@
 
 <script>
     export default {
-        data() {
-            return {};
-        },
         props: {
             data: Array,
             columns: Object,

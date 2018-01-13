@@ -44,11 +44,6 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public VehicleVO saveOrUpdateVehicle(VehicleVO vehicle) {
         VehicleEntity vehicleEntity = vehicle.createEntity();
-        /*TypeOfVehicleEntity typeOfVehicleEntity = typeOfVehicleDAO.getItemById(vehicleEntity.getType().getId());
-        vehicleEntity.setType(typeOfVehicleEntity);
-        OwnerEntity ownerEntity = ownerDAO.getItemById(vehicleEntity.getOwner().getId());
-        vehicleEntity.setOwner(ownerEntity);
-        */
         vehicleDAO.saveOrUpdateItem(vehicleEntity);
         return findVehicle(vehicleEntity.getId());
     }

@@ -29,7 +29,7 @@ public class VehicleVO implements Serializable {
             yearOfIssue = entity.getYearOfIssue();
             TypeOfVehicleEntity vehicleType = entity.getType();
             if (vehicleType != null)
-                type = new TypeOfVehicleVO(vehicleType);
+                type = new TypeOfVehicleVO(vehicleType.getId());
 
             OwnerEntity owner = entity.getOwner();
             if (owner != null)

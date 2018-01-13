@@ -7,10 +7,14 @@ import java.io.Serializable;
 public class TypeOfVehicleVO implements Serializable {
     private Integer id;
     private String name;
-    private float minimumWeight;
-    private float maximumWeight;
+    private Float minimumWeight;
+    private Float maximumWeight;
 
     public TypeOfVehicleVO() {
+    }
+
+    public TypeOfVehicleVO(Integer id) {
+        this.id = id;
     }
 
     public TypeOfVehicleVO(TypeOfVehicleEntity entity) {
@@ -47,19 +51,19 @@ public class TypeOfVehicleVO implements Serializable {
         this.name = name;
     }
 
-    public float getMinimumWeight() {
+    public Float getMinimumWeight() {
         return minimumWeight;
     }
 
-    public void setMinimumWeight(float minimumWeight) {
+    public void setMinimumWeight(Float minimumWeight) {
         this.minimumWeight = minimumWeight;
     }
 
-    public float getMaximumWeight() {
+    public Float getMaximumWeight() {
         return maximumWeight;
     }
 
-    public void setMaximumWeight(float maximumWeight) {
+    public void setMaximumWeight(Float maximumWeight) {
         this.maximumWeight = maximumWeight;
     }
 }

@@ -1,7 +1,7 @@
 <template id="new-edit-modal-template">
     <div class="owner">
         <div class="modal-header">
-            <h3>Данные владельца {{ owner.id }}</h3>
+            <h3>Данные владельца</h3>
         </div>
 
         <form>
@@ -31,7 +31,7 @@
             </div>
 
             <div class="modal-footer text-right">
-                <button type="submit" class="btn btn-default" v-on:click="close">Отмена</button>
+                <button type="submit" class="btn btn-default" v-on:click="closeOwner">Отмена</button>
                 <button type="reset" class="btn btn-primary modal-default-button" v-on:click="saveOwner">
                     <span class="glyphicon glyphicon-save" style="margin-top: 3px;"></span>Сохранить
                 </button>
@@ -55,21 +55,18 @@
         data: function () {
             return {};
         },
-        created() {
-        },
         methods: {
-            close: function () {
+            closeOwner: function () {
                 this.$emit('closeOwner', {})
             },
-
             saveOwner: function () {
                 console.log("Updating owner");
                 this.owner.dateOfBirth = moment(this.owner.dateOfBirth).format('YYYY-MM-DD');
-                let url = 'http://192.168.0.102:8080/driverApp/rest/owners';
+                const url = 'http://192.168.0.102:8080/driverApp/rest/owners';
                 this.$http.post(url, this.owner)
                     .then(
                         resp => {
-                            this.close();
+                            this.closeOwner();
                             this.$root.$emit('loadOwners', {});
                         },
                         error => console.log(error)
