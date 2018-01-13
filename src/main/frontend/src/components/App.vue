@@ -8,10 +8,10 @@
             :data="gridData"
             :columns="gridColumns"
             :filter-key="searchQuery"
-            :selected="selected">
+            :selected="selected"
+          :showNewEditModal = "showNewEditModal">   <!-- fixme  !!!!!-->
         </demo-grid>
-        <edit-module>
-        </edit-module>
+        <edit-module :show.sync="this.showNewEditModal"> </edit-module>
 
     </div>
 </template>
@@ -27,10 +27,10 @@ export default {
     return {
       searchQuery: "",
       gridColumns: {
-        surname: "Surname",
-        name: "name",
-        patronymic: "patronymic",
-        dateOfBirth: "Date Of Birth"
+        id: "Surname",
+        title: "name",
+        body: "patronymic"
+        // dateOfBirth: "Date Of Birth"
       },
       gridData: [
         {
@@ -62,13 +62,25 @@ export default {
           dateOfBirth: "07-04-2001"
         }
       ],
-      selected: []
+      selected: [],
+       showNewEditModal: false  // fixme  !!!
     };
   },
   methods: {
-    // removeElement: function (index) {
-    //     this.items.splice(index, 1);
-    // }
+  },
+  created () {
+    this.$http.get('https://jsonplaceholder.typicode.com/posts')
+      .then(function(data) {
+        // this.gridData.id = data.id;
+        //  this.gridData.surname = data.id;
+        //  this.gridData.name =data.userId;
+        //  this.gridData.patronymic =data.title;
+        //  this.gridData.dateOfBirth =data.body;
+         console.log(data);
+        this.gridData = data.body.slice(0,10);
+        console.log(data.body.slice(0,10));
+          console.log(data.body.slice(0,10).title);
+      });
   }
 };
 </script>
