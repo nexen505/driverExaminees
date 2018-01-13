@@ -38,8 +38,7 @@ public class OwnerEntity implements Identifiable {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_owner_seq_name")
-    @SequenceGenerator(name = "id_owner_seq_name", sequenceName = "id_owner_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }

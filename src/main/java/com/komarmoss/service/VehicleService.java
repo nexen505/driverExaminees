@@ -10,7 +10,7 @@ public interface VehicleService {
 
     VehicleVO findVehicle(Integer id);
 
-    VehicleVO saveOrUpdateVehicle(VehicleVO owner);
+    VehicleVO saveOrUpdateVehicle(VehicleVO vehicleVO);
 
     boolean removeVehicle(Integer id);
 

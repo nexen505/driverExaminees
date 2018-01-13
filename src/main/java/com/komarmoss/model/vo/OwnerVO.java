@@ -24,6 +24,10 @@ public class OwnerVO implements Serializable {
     public OwnerVO() {
     }
 
+    public OwnerVO(Integer id) {
+        this.id = id;
+    }
+
     public OwnerVO(OwnerEntity entity) {
         if (entity != null) {
             id = entity.getId();

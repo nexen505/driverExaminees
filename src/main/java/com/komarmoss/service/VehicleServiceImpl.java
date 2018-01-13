@@ -1,6 +1,10 @@
 package com.komarmoss.service;
 
+import com.komarmoss.model.dao.OwnerDAO;
+import com.komarmoss.model.dao.TypeOfVehicleDAO;
 import com.komarmoss.model.dao.VehicleDAO;
+import com.komarmoss.model.entity.OwnerEntity;
+import com.komarmoss.model.entity.TypeOfVehicleEntity;
 import com.komarmoss.model.entity.VehicleEntity;
 import com.komarmoss.model.vo.VehicleVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +19,14 @@ import java.util.stream.Collectors;
 public class VehicleServiceImpl implements VehicleService {
 
     private final VehicleDAO vehicleDAO;
+    private final TypeOfVehicleDAO typeOfVehicleDAO;
+    private final OwnerDAO ownerDAO;
 
     @Autowired
-    public VehicleServiceImpl(VehicleDAO vehicleDAO) {
+    public VehicleServiceImpl(VehicleDAO vehicleDAO, TypeOfVehicleDAO typeOfVehicleDAO, OwnerDAO ownerDAO) {
         this.vehicleDAO = vehicleDAO;
+        this.typeOfVehicleDAO = typeOfVehicleDAO;
+        this.ownerDAO = ownerDAO;
     }
 
     @Override
@@ -37,6 +45,10 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public VehicleVO saveOrUpdateVehicle(VehicleVO vehicle) {
         VehicleEntity vehicleEntity = vehicle.createEntity();
+        TypeOfVehicleEntity typeOfVehicleEntity = typeOfVehicleDAO.getItemById(vehicleEntity.getType().getId());
+        vehicleEntity.setType(typeOfVehicleEntity);
+        OwnerEntity ownerEntity = ownerDAO.getItemById(vehicleEntity.getOwner().getId());
+        vehicleEntity.setOwner(ownerEntity);
         vehicleDAO.saveOrUpdateItem(vehicleEntity);
         return findVehicle(vehicleEntity.getId());
     }

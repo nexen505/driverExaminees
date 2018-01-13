@@ -1,116 +1,177 @@
 <template>
     <!-- demo root element -->
     <div class="demo">
-        <form id="search">
-            Search <input name="query" v-model="searchQuery">
-        </form>
-        <demo-grid
-            :data="gridData"
-            :columns="gridColumns"
-            :filter-key="searchQuery"
-            :selected="selected"
-          :showNewEditModal = "showNewEditModal">   <!-- fixme  !!!!!-->
-        </demo-grid>
-        <edit-module :show.sync="this.showNewEditModal"> </edit-module>
-
+        <div class="owners-wrapper">
+            <form class="search" id="searchOwner">
+                Найти <input name="query" v-model="searchQuery">
+            </form>
+            <demo-grid
+                    v-on:edit="editOwner"
+                    :data="ownersData"
+                    :columns="ownerColumns"
+                    :filter-key="searchQuery"
+                    :delete-url="'http://localhost:8080/driverApp/rest/owners'">
+            </demo-grid>
+        </div>
+        <div class="owner-wrapper" v-show="isSelected">
+            <vue-tabs>
+                <v-tab title="Данные о владельце">
+                    <edit-module v-on:closeOwner="closeOwner"
+                                 v-if="owner!=null"
+                                 :owner="owner"></edit-module>
+                </v-tab>
+                <v-tab title="Данные о ТС">
+                    <form class="search"
+                          id="searchVehicle"
+                          v-if="ownerVehiclesData.length">
+                        Найти <input name="query" v-model="searchVehiclesQuery">
+                    </form>
+                    <demo-grid
+                            :data="ownerVehiclesData"
+                            :columns="vehicleColumns"
+                            :filter-key="searchVehiclesQuery"
+                            :delete-url="'http://localhost:8080/driverApp/rest/owners'">
+                    </demo-grid>
+                </v-tab>
+            </vue-tabs>
+        </div>
     </div>
 </template>
 
 <script>
-import DemoGrid from "./DemoGrid.vue";
-import EditModule from "./EditModule.vue";
+    import DemoGrid from "./DemoGrid.vue";
+    import EditModule from "./EditModule.vue";
+    import {VTab, VueTabs} from 'vue-nav-tabs'
+    import 'vue-nav-tabs/themes/vue-tabs.css'
+    import moment from 'moment';
 
-export default {
-  name: "demo",
-  components: { DemoGrid, EditModule },
-  data() {
-    return {
-      searchQuery: "",
-      gridColumns: {
-        id: "Surname",
-        title: "name",
-        body: "patronymic"
-        // dateOfBirth: "Date Of Birth"
-      },
-      gridData: [
-        {
-          id: "1",
-          surname: "Smith",
-          name: "Adam",
-          patronymic: "Ara",
-          dateOfBirth: "12-12-2001"
+    export default {
+        name: "demo",
+        components: {
+            DemoGrid,
+            EditModule,
+            VueTabs,
+            VTab
         },
-        {
-          id: "2",
-          surname: "Black",
-          name: "Petr",
-          patronymic: "Eres",
-          dateOfBirth: "07-04-2001"
+        data() {
+            return {
+                searchQuery: '',
+                searchVehiclesQuery: '',
+                isSelected: false,
+
+                ownersData: [],
+                ownerColumns: {
+                    surname: "Фамилия",
+                    name: "Имя",
+                    patronymic: "Отчество",
+                    dateOfBirth: "Дата рождения"
+                },
+
+                owner: null,
+                ownerVehiclesData: [],
+                vehicleColumns: {
+                    name: 'Название',
+                    brand: 'Марка',
+                    yearOfIssue: 'Год выпуска'
+                },
+            };
         },
-        {
-          id: "3",
-          surname: "White",
-          name: "Carl",
-          patronymic: "Fare",
-          dateOfBirth: "07-04-2001"
+        methods: {
+            closeOwner: function () {
+                console.log('closing owner form..');
+                this.isSelected = false;
+                this.owner = null;
+            },
+            editOwner: function(owner) {
+                console.log("need to load owner full", owner);
+                let url = 'http://localhost:8080/driverApp/rest/owners';
+                this.$http.get(url, {
+                    params: {
+                        id: owner.id
+                    }
+                })
+                    .then(
+                        res => {
+                            console.log(res);
+                            this.owner = res.body.result;
+                            this.owner.dateOfBirth = moment(this.owner.dateOfBirth, 'YYYY-MM-DD').toDate();
+                            this.isSelected = true;
+                            console.log("owner is loaded");
+                        },
+                        error => console.log(error)
+                    );
+            }
         },
-        {
-          id: "4",
-          surname: "Lens",
-          name: "Sara",
-          patronymic: "Ynsa",
-          dateOfBirth: "07-04-2001"
+        beforeCreate() {
+            this.$root.$on('loadOwners', evt => {
+                let url = 'http://localhost:8080/driverApp/rest/owners';
+                this.$http.get(url)
+                    .then(function (data) {
+                        console.log(data);
+                        this.ownersData = data.body.result;
+                    });
+            });
+        },
+        beforeDestroy() {
+            this.$root.$off('loadOwners');
+        },
+        created() {
+            this.$root.$emit('loadOwners', {});
         }
-      ],
-      selected: [],
-       showNewEditModal: false  // fixme  !!!
     };
-  },
-  methods: {
-  },
-  created () {
-    this.$http.get('https://jsonplaceholder.typicode.com/posts')
-      .then(function(data) {
-        // this.gridData.id = data.id;
-        //  this.gridData.surname = data.id;
-        //  this.gridData.name =data.userId;
-        //  this.gridData.patronymic =data.title;
-        //  this.gridData.dateOfBirth =data.body;
-         console.log(data);
-        this.gridData = data.body.slice(0,10);
-        console.log(data.body.slice(0,10));
-          console.log(data.body.slice(0,10).title);
-      });
-  }
-};
 </script>
 
 <style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+    .demo {
+        display: flex;
+        flex-direction: row;
+        .owners-wrapper, .owner-wrapper {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 100%;
+            padding: 10px;
+        }
+        .owners-wrapper {
+            .search {
+                margin: 5px 0;
+                input {
+                    width: 250px;
+                }
+            }
+        }
+        .owner-wrapper {
+            vue-tabs {
+                v-tab {
+                    padding: 10px 0;
+                }
+            }
+        }
+    }
 
-h1,
-h2 {
-  font-weight: normal;
-}
+    #app {
+        font-family: "Avenir", Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 60px;
+    }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+    h1,
+    h2 {
+        font-weight: normal;
+    }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+    ul {
+        list-style-type: none;
+        padding: 0;
+        li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+    }
 
-a {
-  color: #42b983;
-}
+    a {
+        color: #42b983;
+    }
 </style>

@@ -1,5 +1,6 @@
 package com.komarmoss.model.vo;
 
+import com.komarmoss.model.entity.OwnerEntity;
 import com.komarmoss.model.entity.TypeOfVehicleEntity;
 import com.komarmoss.model.entity.VehicleEntity;
 
@@ -11,8 +12,13 @@ public class VehicleVO implements Serializable {
     private String brand;
     private Integer yearOfIssue;
     private VehicleTypeVO type;
+    private OwnerVO owner;
 
     public VehicleVO() {
+    }
+
+    public VehicleVO(Integer id) {
+        this.id = id;
     }
 
     public VehicleVO(VehicleEntity entity) {
@@ -24,6 +30,10 @@ public class VehicleVO implements Serializable {
             TypeOfVehicleEntity vehicleType = entity.getType();
             if (vehicleType != null)
                 type = new VehicleTypeVO(vehicleType);
+
+            OwnerEntity owner = entity.getOwner();
+            if (owner != null)
+                this.owner = new OwnerVO(owner.getId());
         }
     }
 
@@ -67,11 +77,11 @@ public class VehicleVO implements Serializable {
         this.brand = brand;
     }
 
-    public int getYearOfIssue() {
+    public Integer getYearOfIssue() {
         return yearOfIssue;
     }
 
-    public void setYearOfIssue(int yearOfIssue) {
+    public void setYearOfIssue(Integer yearOfIssue) {
         this.yearOfIssue = yearOfIssue;
     }
 
@@ -81,5 +91,13 @@ public class VehicleVO implements Serializable {
 
     public void setType(VehicleTypeVO type) {
         this.type = type;
+    }
+
+    public OwnerVO getOwner() {
+        return owner;
+    }
+
+    public void setOwner(OwnerVO owner) {
+        this.owner = owner;
     }
 }

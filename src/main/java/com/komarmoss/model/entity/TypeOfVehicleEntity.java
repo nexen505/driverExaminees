@@ -44,8 +44,7 @@ public class TypeOfVehicleEntity implements Identifiable {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "type_transport_seq_name")
-    @SequenceGenerator(name = "type_transport_seq_name", sequenceName = "type_transport_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
