@@ -97,21 +97,18 @@ export default {
         id: report.id,
         _token: "delete"
       };
-      // this.$http.post(
-      //   "http://crossorigin.me/http://codepen.io/billmurrin/pen/EKXbyZ.js",
-      //   dataparams,
-      //   {
-      //     xhr: {
-      //       onreadystatechange: function(response) {
-      //         if (this.readyState === 4) {
-      //           console.log(this.status);
-      //           console.log(this.response);
-      //           return;
-      //         }
-      //       }
-      //     }
-      //   }
-      // );
+      this.$http.post('https://jsonplaceholder.typicode.com/posts',dataparams)
+      .then(
+        (res)=> console.log (res.body)
+          // function(response) {   
+              // if (this.readyState === 4) {
+              //   console.log(this.status);
+              //   console.log(this.response);
+              //   return;
+              // }
+            // } 
+      )
+      .catch ((error)=> console.log(error));
 
       alert("This ID would get deleted: " + report.id);
       console.log(report);
