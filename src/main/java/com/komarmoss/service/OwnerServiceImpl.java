@@ -23,7 +23,9 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public List<OwnerVO> findOwners() {
-        return ownerDAO.getAllItems()
+        final List<OwnerEntity> allItems = ownerDAO.getAllItems();
+        allItems.forEach(OwnerEntity::getTransportList);
+        return allItems
                 .parallelStream()
                 .map(OwnerVO::new)
                 .collect(Collectors.toList());

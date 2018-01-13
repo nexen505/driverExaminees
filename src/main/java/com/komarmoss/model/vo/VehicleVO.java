@@ -11,7 +11,7 @@ public class VehicleVO implements Serializable {
     private String name;
     private String brand;
     private Integer yearOfIssue;
-    private VehicleTypeVO type;
+    private TypeOfVehicleVO type;
     private OwnerVO owner;
 
     public VehicleVO() {
@@ -29,7 +29,7 @@ public class VehicleVO implements Serializable {
             yearOfIssue = entity.getYearOfIssue();
             TypeOfVehicleEntity vehicleType = entity.getType();
             if (vehicleType != null)
-                type = new VehicleTypeVO(vehicleType);
+                type = new TypeOfVehicleVO(vehicleType);
 
             OwnerEntity owner = entity.getOwner();
             if (owner != null)
@@ -48,6 +48,12 @@ public class VehicleVO implements Serializable {
             TypeOfVehicleEntity typeOfVehicleEntity = new TypeOfVehicleEntity();
             typeOfVehicleEntity.setId(type.getId());
             vehicleEntity.setType(typeOfVehicleEntity);
+        }
+
+        if (owner != null) {
+            OwnerEntity ownerEntity = new OwnerEntity();
+            ownerEntity.setId(owner.getId());
+            vehicleEntity.setOwner(ownerEntity);
         }
 
         return vehicleEntity;
@@ -85,11 +91,11 @@ public class VehicleVO implements Serializable {
         this.yearOfIssue = yearOfIssue;
     }
 
-    public VehicleTypeVO getType() {
+    public TypeOfVehicleVO getType() {
         return type;
     }
 
-    public void setType(VehicleTypeVO type) {
+    public void setType(TypeOfVehicleVO type) {
         this.type = type;
     }
 

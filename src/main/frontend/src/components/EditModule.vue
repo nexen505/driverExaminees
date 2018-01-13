@@ -4,32 +4,39 @@
             <h3>Данные владельца {{ owner.id }}</h3>
         </div>
 
-        <div class="modal-body">
-            <label class="form-label">
-                Фамилия
-                <input v-model="owner.surname" class="form-control">
-            </label>
-            <label class="form-label">
-                Имя
-                <input v-model="owner.name" class="form-control">
-            </label>
-            <label class="form-label">
-                Отчество
-                <input v-model="owner.patronymic" class="form-control">
-            </label>
-            <label class="form-label">
-                Дата рождения
-                <datepicker v-model="owner.dateOfBirth" :inline="true"></datepicker>
-            </label>
-        </div>
+        <form>
+            <div class="modal-body">
+                <label class="form-label">
+                    Фамилия
+                    <input v-model="owner.surname"
+                           class="form-control"
+                           v-validate="'required'">
+                </label>
+                <label class="form-label">
+                    Имя
+                    <input v-model="owner.name"
+                           class="form-control"
+                           v-validate="'required'">
+                </label>
+                <label class="form-label">
+                    Отчество
+                    <input v-model="owner.patronymic"
+                           class="form-control"
+                           v-validate="'required'">
+                </label>
+                <label class="form-label">
+                    Дата рождения
+                    <datepicker v-model="owner.dateOfBirth" :inline="true"></datepicker>
+                </label>
+            </div>
 
-        <div class="modal-footer text-right">
-            <button class="btn btn-default" v-on:click="close">Отмена</button>
-            <button class="btn btn-primary modal-default-button" v-on:click="saveOwner">
-                <span class="glyphicon glyphicon-save" style="margin-top: 3px;"></span>Сохранить
-            </button>
-        </div>
-
+            <div class="modal-footer text-right">
+                <button type="submit" class="btn btn-default" v-on:click="close">Отмена</button>
+                <button type="reset" class="btn btn-primary modal-default-button" v-on:click="saveOwner">
+                    <span class="glyphicon glyphicon-save" style="margin-top: 3px;"></span>Сохранить
+                </button>
+            </div>
+        </form>
     </div>
 
 </template>
@@ -46,9 +53,7 @@
             owner: Object
         },
         data: function () {
-            return {
-
-            };
+            return {};
         },
         created() {
         },

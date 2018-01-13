@@ -3,9 +3,8 @@ package com.komarmoss.service;
 import com.komarmoss.model.dao.OwnerDAO;
 import com.komarmoss.model.dao.TypeOfVehicleDAO;
 import com.komarmoss.model.dao.VehicleDAO;
-import com.komarmoss.model.entity.OwnerEntity;
-import com.komarmoss.model.entity.TypeOfVehicleEntity;
 import com.komarmoss.model.entity.VehicleEntity;
+import com.komarmoss.model.vo.TypeOfVehicleVO;
 import com.komarmoss.model.vo.VehicleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,10 +44,11 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public VehicleVO saveOrUpdateVehicle(VehicleVO vehicle) {
         VehicleEntity vehicleEntity = vehicle.createEntity();
-        TypeOfVehicleEntity typeOfVehicleEntity = typeOfVehicleDAO.getItemById(vehicleEntity.getType().getId());
+        /*TypeOfVehicleEntity typeOfVehicleEntity = typeOfVehicleDAO.getItemById(vehicleEntity.getType().getId());
         vehicleEntity.setType(typeOfVehicleEntity);
         OwnerEntity ownerEntity = ownerDAO.getItemById(vehicleEntity.getOwner().getId());
         vehicleEntity.setOwner(ownerEntity);
+        */
         vehicleDAO.saveOrUpdateItem(vehicleEntity);
         return findVehicle(vehicleEntity.getId());
     }
@@ -60,6 +60,14 @@ public class VehicleServiceImpl implements VehicleService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<TypeOfVehicleVO> getTypesOfVehicles() {
+        return typeOfVehicleDAO.getAllItems()
+                .parallelStream()
+                .map(TypeOfVehicleVO::new)
+                .collect(Collectors.toList());
     }
 
 }

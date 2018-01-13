@@ -4,16 +4,16 @@ import com.komarmoss.model.entity.TypeOfVehicleEntity;
 
 import java.io.Serializable;
 
-public class VehicleTypeVO implements Serializable {
+public class TypeOfVehicleVO implements Serializable {
     private Integer id;
     private String name;
     private float minimumWeight;
     private float maximumWeight;
 
-    public VehicleTypeVO() {
+    public TypeOfVehicleVO() {
     }
 
-    public VehicleTypeVO(TypeOfVehicleEntity entity) {
+    public TypeOfVehicleVO(TypeOfVehicleEntity entity) {
         if (entity != null) {
             id = entity.getId();
             name = entity.getName();

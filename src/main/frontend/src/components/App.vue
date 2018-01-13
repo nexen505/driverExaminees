@@ -1,46 +1,62 @@
 <template>
-    <!-- demo root element -->
-    <div class="demo">
-        <div class="owners-wrapper">
-            <form class="search" id="searchOwner">
-                Найти <input name="query" v-model="searchQuery">
-            </form>
-            <demo-grid
-                    v-on:edit="editOwner"
-                    :data="ownersData"
-                    :columns="ownerColumns"
-                    :filter-key="searchQuery"
-                    :delete-url="'http://192.168.0.102:8080/driverApp/rest/owners'">
-            </demo-grid>
+    <div class="app">
+        <div class="modal-header">
+            <h3>Автовладельцы</h3>
         </div>
-        <div class="owner-wrapper" v-show="isSelected">
-            <vue-tabs>
-                <v-tab title="Данные о владельце">
-                    <edit-module v-on:closeOwner="closeOwner"
-                                 v-if="owner!=null"
-                                 :owner="owner"></edit-module>
-                </v-tab>
-                <v-tab title="Данные о ТС">
-                    <form class="search"
-                          id="searchVehicle"
-                          v-if="ownerVehiclesData.length">
-                        Найти <input name="query" v-model="searchVehiclesQuery">
-                    </form>
-                    <demo-grid
-                            v-on:edit="editVehicle"
-                            :data="ownerVehiclesData"
-                            :columns="vehicleColumns"
-                            :filter-key="searchVehiclesQuery"
-                            :delete-url="'http://192.168.0.102:8080/driverApp/rest/vehicles'">
-                    </demo-grid>
-                    <edit-vehicle 
-                                v-show="isSelectedEditedVehicle"
-                                v-on:closeVehicle="closeVehicle"
-                                v-if="vehicle!=null"
-                                :vehicle="vehicle">
-                    </edit-vehicle>
-                </v-tab>
-            </vue-tabs>
+        <div class="demo">
+            <div class="owners-wrapper">
+                <button class="btn btn-success owner-add-btn" v-on:click="addOwner">
+                    <span class="glyphicon glyphicon-add" style="margin-top: 3px;"></span> Добавить
+                </button>
+                <form class="search" id="searchOwner">
+                    Найти <input name="query" v-model="searchQuery">
+                </form>
+                <demo-grid
+                        v-on:edit="editOwner"
+                        :data="ownersData"
+                        :columns="ownerColumns"
+                        :filter-key="searchQuery"
+                        :delete-url="'http://localhost:8080/driverApp/rest/owners'">
+                </demo-grid>
+            </div>
+            <div class="owner-wrapper" v-show="isSelected">
+                <vue-tabs>
+                    <v-tab title="Данные о владельце">
+                        <div class="tab-content">
+                            <edit-module v-on:closeOwner="closeOwner"
+                                         v-if="owner!=null"
+                                         :owner="owner"></edit-module>
+                        </div>
+                    </v-tab>
+                    <v-tab title="Данные о ТС"
+                           v-if="owner && owner.id">
+                        <div class="tab-content">
+                            <div v-if="ownerVehiclesData.length">
+                                <form class="search"
+                                      id="searchVehicle">
+                                    Найти <input name="query" v-model="searchVehiclesQuery">
+                                </form>
+                                <demo-grid
+                                        v-on:edit="editVehicle"
+                                        :data="ownerVehiclesData"
+                                        :columns="vehicleColumns"
+                                        :filter-key="searchVehiclesQuery"
+                                        :delete-url="'http://localhost:8080/driverApp/rest/vehicles'">
+                                </demo-grid>
+                                <edit-vehicle
+                                        v-show="isSelectedEditedVehicle"
+                                        v-on:closeVehicle="closeVehicle"
+                                        v-if="vehicle!=null"
+                                        :vehicle="vehicle">
+                                </edit-vehicle>
+                            </div>
+                            <div v-else>
+
+                            </div>
+                        </div>
+                    </v-tab>
+                </vue-tabs>
+            </div>
         </div>
     </div>
 </template>
@@ -92,9 +108,9 @@
                 this.isSelected = false;
                 this.owner = null;
             },
-            editOwner: function(owner) {
+            editOwner: function (owner) {
                 console.log("need to load owner full", owner);
-                let url = 'http://192.168.0.102:8080/driverApp/rest/owners';
+                let url = 'http://localhost:8080/driverApp/rest/owners';
                 this.$http.get(url, {
                     params: {
                         id: owner.id
@@ -103,6 +119,7 @@
                     .then(
                         res => {
                             console.log(res);
+                            this.closeOwner();
                             this.owner = res.body.result;
                             this.owner.dateOfBirth = moment(this.owner.dateOfBirth, 'YYYY-MM-DD').toDate();
                             this.ownerVehiclesData = this.owner.vehicles;
@@ -122,10 +139,16 @@
                 this.isSelectedEditedVehicle = true;
                 this.vehicle = vehicle;
             }
+            addOwner: function () {
+                this.owner = {};
+                this.owner.dateOfBirth = moment(new Date(), 'YYYY-MM-DD').toDate();
+                this.ownerVehiclesData = [];
+                this.isSelected = true;
+            }
         },
         beforeCreate() {
             this.$root.$on('loadOwners', evt => {
-                let url = 'http://192.168.0.102:8080/driverApp/rest/owners';
+                let url = 'http://localhost:8080/driverApp/rest/owners';
                 this.$http.get(url)
                     .then(function (data) {
                         console.log(data);
@@ -156,18 +179,22 @@
             padding: 10px;
         }
         .owners-wrapper {
+            padding: 10px;
             .search {
                 margin: 5px 0;
                 input {
                     width: 250px;
                 }
             }
+            .owner-add-btn {
+                margin: 10px 0;
+                display: block;
+                width: 100px;
+            }
         }
         .owner-wrapper {
-            vue-tabs {
-                v-tab {
-                    padding: 10px 0;
-                }
+            .tab-content {
+                margin: 10px 0;
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.komarmoss.service;
 
+import com.komarmoss.model.vo.TypeOfVehicleVO;
 import com.komarmoss.model.vo.VehicleVO;
 
 import java.util.List;
@@ -13,5 +14,7 @@ public interface VehicleService {
     VehicleVO saveOrUpdateVehicle(VehicleVO vehicleVO);
 
     boolean removeVehicle(Integer id);
+
+    List<TypeOfVehicleVO> getTypesOfVehicles();
 
 }
