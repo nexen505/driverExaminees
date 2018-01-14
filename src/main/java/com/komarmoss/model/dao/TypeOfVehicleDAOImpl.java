@@ -4,5 +4,5 @@ import com.komarmoss.model.entity.TypeOfVehicleEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TypeOfVehicleDAOImpl extends BasicDAOImpl<TypeOfVehicleEntity, Integer> implements TypeOfVehicleDAO {
+public class TypeOfVehicleDAOImpl extends AbstractDAOImpl<TypeOfVehicleEntity, Integer> implements TypeOfVehicleDAO {
 }

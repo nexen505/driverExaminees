@@ -52,14 +52,7 @@ public class OwnerVO implements Serializable {
         ownerEntity.setPatronymic(patronymic);
         ownerEntity.setSurname(surname);
         ownerEntity.setDateOfBirth(dateOfBirth);
-
-        ownerEntity.setTransportList(vehicles.parallelStream().map(vo -> {
-            if (vo == null) return null;
-            VehicleEntity vehicle = new VehicleEntity();
-            vehicle.setId(vo.getId());
-            vehicle.setOwner(ownerEntity);
-            return vehicle;
-        }).filter(Objects::nonNull).collect(Collectors.toList()));
+        ownerEntity.setTransportList(vehicles.parallelStream().map(VehicleVO::createEntity).filter(Objects::nonNull).collect(Collectors.toList()));
         return ownerEntity;
     }
 

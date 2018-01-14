@@ -21,7 +21,6 @@ class CustomObjectMapper extends ObjectMapper {
                 gen.writeString(EMPTY_STR_RPL);
             }
         });
-//        setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm"));
         configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
         setSerializerProvider(sp);
     }

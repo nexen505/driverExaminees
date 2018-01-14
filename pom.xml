@@ -12,7 +12,7 @@
     <properties>
         <javax.servlet>3.1.0</javax.servlet>
         <spring.version>4.3.4.RELEASE</spring.version>
-        <hibernate.version>4.1.0.Final</hibernate.version>
+        <hibernate.version>4.3.7.Final</hibernate.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
