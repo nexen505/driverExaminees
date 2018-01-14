@@ -11,11 +11,11 @@ public interface AbstractDAO<T extends Identifiable, ID extends Serializable> {
 
     List<T> getAllItems();
 
-    ID saveItem(T entity);
+    void saveItem(T entity);
 
-    ID saveOrUpdateItem(T entity);
+    void saveOrUpdateItem(T entity);
 
-    ID updateItem(T entity);
+    void updateItem(T entity);
 
     void removeItem(T entity);
 

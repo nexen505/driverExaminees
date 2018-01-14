@@ -1,6 +1,5 @@
 package com.komarmoss.service;
 
-import com.komarmoss.model.dao.OwnerDAO;
 import com.komarmoss.model.dao.TypeOfVehicleDAO;
 import com.komarmoss.model.dao.VehicleDAO;
 import com.komarmoss.model.entity.VehicleEntity;
@@ -14,21 +13,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class VehicleServiceImpl implements VehicleService {
 
     private final VehicleDAO vehicleDAO;
     private final TypeOfVehicleDAO typeOfVehicleDAO;
-    private final OwnerDAO ownerDAO;
 
     @Autowired
-    public VehicleServiceImpl(VehicleDAO vehicleDAO, TypeOfVehicleDAO typeOfVehicleDAO, OwnerDAO ownerDAO) {
+    public VehicleServiceImpl(VehicleDAO vehicleDAO, TypeOfVehicleDAO typeOfVehicleDAO) {
         this.vehicleDAO = vehicleDAO;
         this.typeOfVehicleDAO = typeOfVehicleDAO;
-        this.ownerDAO = ownerDAO;
     }
 
     @Override
+    @Transactional
     public List<VehicleVO> findVehicles() {
         return vehicleDAO.getAllItems()
                 .parallelStream()
@@ -37,11 +34,13 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    @Transactional
     public VehicleVO findVehicle(Integer id) {
         return new VehicleVO(vehicleDAO.getItemById(id));
     }
 
     @Override
+    @Transactional
     public VehicleVO saveOrUpdateVehicle(VehicleVO vehicle) {
         VehicleEntity vehicleEntity = vehicle.createEntity();
         vehicleDAO.saveOrUpdateItem(vehicleEntity);
@@ -49,6 +48,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    @Transactional
     public boolean removeVehicle(Integer id) {
         if (id != null) {
             vehicleDAO.removeItemById(id);
@@ -58,6 +58,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    @Transactional
     public List<TypeOfVehicleVO> getTypesOfVehicles() {
         return typeOfVehicleDAO.getAllItems()
                 .parallelStream()
