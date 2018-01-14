@@ -5,23 +5,17 @@ import com.komarmoss.model.entity.Identifiable;
 import java.io.Serializable;
 import java.util.List;
 
-public interface BasicDAO<T extends Identifiable, ID extends Serializable> {
-
-//    String getQueryForAllObjects();
+public interface AbstractDAO<T extends Identifiable, ID extends Serializable> {
 
     T getItemById(final ID id);
-
-    List<T> getItemsByIds(final List<ID> ids);
 
     List<T> getAllItems();
 
     ID saveItem(T entity);
 
-    List<ID> saveItems(List<T> items);
+    ID saveOrUpdateItem(T entity);
 
-    void saveOrUpdateItem(T entity);
-
-    void updateItem(T entity);
+    ID updateItem(T entity);
 
     void removeItem(T entity);
 
